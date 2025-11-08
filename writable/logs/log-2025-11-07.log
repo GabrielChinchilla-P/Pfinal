@@ -1,0 +1,655 @@
+ERROR - 2025-11-07 14:44:38 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), 'bd_visitamedica', 3306, '', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(714): CodeIgniter\Model->doFirst()
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(31): CodeIgniter\BaseModel->first()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(714): CodeIgniter\Model->doFirst()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(31): CodeIgniter\BaseModel->first()
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-11-07 14:44:38 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: NO)
+[Method: POST, Route: auth/login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `usuarios`
+WHERE `email` = :email:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(714): CodeIgniter\Model->doFirst()
+ 5 APPPATH\Controllers\AuthController.php(31): CodeIgniter\BaseModel->first()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 15:42:37 --> Error connecting to the database: mysqli_sql_exception: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', '', Object(SensitiveParameterValue), 'bd_visitamedica', 3306, '', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(87): CodeIgniter\Controller->validate(Array)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user ''@'localhost' (using password: NO) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(87): CodeIgniter\Controller->validate(Array)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 15:42:37 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user ''@'localhost' (using password: NO)
+[Method: POST, Route: auth/register]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1
+FROM `usuarios`
+WHERE `usuario` = :usuario:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', [...], null, 'usuario')
+ 5 SYSTEMPATH\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', [...], [...], 'usuario')
+ 6 SYSTEMPATH\Controller.php(137): CodeIgniter\Validation\Validation->run()
+ 7 APPPATH\Controllers\AuthController.php(87): CodeIgniter\Controller->validate([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->register()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 15:49:47 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'ci4', 3306, '', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(87): CodeIgniter\Controller->validate(Array)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(87): CodeIgniter\Controller->validate(Array)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 15:49:47 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+[Method: POST, Route: auth/register]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1
+FROM `usuarios`
+WHERE `usuario` = :usuario:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', [...], null, 'usuario')
+ 5 SYSTEMPATH\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', [...], [...], 'usuario')
+ 6 SYSTEMPATH\Controller.php(137): CodeIgniter\Validation\Validation->run()
+ 7 APPPATH\Controllers\AuthController.php(87): CodeIgniter\Controller->validate([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->register()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 15:54:57 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'ci4', 3306, '', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(89): CodeIgniter\Controller->validate(Array)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(89): CodeIgniter\Controller->validate(Array)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 15:54:57 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+[Method: POST, Route: auth/register]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1
+FROM `usuarios`
+WHERE `usuario` = :usuario:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', [...], null, 'usuario')
+ 5 SYSTEMPATH\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', [...], [...], 'usuario')
+ 6 SYSTEMPATH\Controller.php(137): CodeIgniter\Validation\Validation->run()
+ 7 APPPATH\Controllers\AuthController.php(89): CodeIgniter\Controller->validate([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->register()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 15:59:19 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'bd_visitamedica', 3306, '', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(89): CodeIgniter\Controller->validate(Array)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', Array, NULL, 'usuario')
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', Array, Array, 'usuario')
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Controller.php(137): CodeIgniter\Validation\Validation->run()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\AuthController.php(89): CodeIgniter\Controller->validate(Array)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\AuthController->register()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 15:59:19 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+[Method: POST, Route: auth/register]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT 1
+FROM `usuarios`
+WHERE `usuario` = :usuario:
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Validation\StrictRules\Rules.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\Validation\Validation.php(339): CodeIgniter\Validation\StrictRules\Rules->is_unique('admin', 'usuario', [...], null, 'usuario')
+ 5 SYSTEMPATH\Validation\Validation.php(204): CodeIgniter\Validation\Validation->processRules('usuario', 'usuario', 'admin', [...], [...], 'usuario')
+ 6 SYSTEMPATH\Controller.php(137): CodeIgniter\Validation\Validation->run()
+ 7 APPPATH\Controllers\AuthController.php(89): CodeIgniter\Controller->validate([...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->register()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 16:46:28 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "layouts/header.php"
+[Method: GET, Route: menu]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('layouts/header.php')
+ 2 SYSTEMPATH\View\View.php(487): CodeIgniter\View\View->render('layouts/header', null, true)
+ 3 APPPATH\Views\menu\index.php(1): CodeIgniter\View\View->include('layouts/header')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\pp2025\\ci4_Pfinal\\app\\Views\\menu\\index.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('menu/index', [], true)
+ 7 APPPATH\Controllers\MenuController.php(23): view('menu/index', [...])
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\MenuController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MenuController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 16:57:25 --> ErrorException: Undefined array key "id"
+[Method: POST, Route: auth/login]
+in APPPATH\Controllers\AuthController.php on line 50.
+ 1 APPPATH\Controllers\AuthController.php(50): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id"', 'C:\\xampp\\htdocs\\pp2025\\ci4_Pfinal\\app\\Controllers\\AuthController.php', 50)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 17:18:25 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "nomina/index.php"
+[Method: GET, Route: nomina]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('nomina/index.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('nomina/index', [], true)
+ 3 APPPATH\Controllers\Nomina.php(42): view('nomina/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 17:20:23 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "nomina/index.php"
+[Method: GET, Route: nomina]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('nomina/index.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('nomina/index', [], true)
+ 3 APPPATH\Controllers\Nomina.php(42): view('nomina/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 17:21:07 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "nomina/index.php"
+[Method: GET, Route: nomina]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('nomina/index.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('nomina/index', [], true)
+ 3 APPPATH\Controllers\Nomina.php(42): view('nomina/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 17:21:09 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "nomina/index.php"
+[Method: GET, Route: nomina]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('nomina/index.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('nomina/index', [], true)
+ 3 APPPATH\Controllers\Nomina.php(42): view('nomina/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 17:21:14 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "nomina/index.php"
+[Method: GET, Route: nomina]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('nomina/index.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('nomina/index', [], true)
+ 3 APPPATH\Controllers\Nomina.php(42): view('nomina/index', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 18:10:33 --> ErrorException: Cannot declare class Config\AuthFilter, because the name is already in use
+[Method: GET, Route: nomina]
+in APPPATH\Config\Filters.php on line 20.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-11-07 22:26:28 --> mysqli_sql_exception: Unknown column 'departamentos.nombre' in 'field list' in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `informe...', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe...')
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe...')
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Models\InformeGastoModel.php(57): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\InformeGasto.php(41): App\Models\InformeGastoModel->getInformesConDetalles(NULL)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 22:26:28 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departamentos.nombre' in 'field list'
+[Method: GET, Route: informegasto]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\InformeGastoModel.php(57): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\InformeGasto.php(41): App\Models\InformeGastoModel->getInformesConDetalles(null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:26:28 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'departamentos.nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\InformeGastoModel.php(57): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\InformeGasto.php(41): App\Models\InformeGastoModel->getInformesConDetalles(null)
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:26:28 --> [Caused by] mysqli_sql_exception: Unknown column 'departamentos.nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gastos`.*, `empleados`.`nombre` as `nombre_empleado`, `empleados`.`apellido` as `apellido_empleado`, `departamentos`.`nombre` as `nombre_departamento`
+FROM `informe_gastos`
+JOIN `empleados` ON `empleados`.`id_empleado` = `informe_gastos`.`id_empleado`
+JOIN `departamentos` ON `departamentos`.`id_departamento` = `informe_gastos`.`id_departamento`
+ORDER BY `informe_gastos`.`fecha_visita` DESC', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\InformeGastoModel.php(57): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\InformeGasto.php(41): App\Models\InformeGastoModel->getInformesConDetalles(null)
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:27:59 --> BadMethodCallException: Call to undefined method App\Models\InformeGastoModel::getInformeConEmpleadoYDepartamento
+[Method: GET, Route: informegasto]
+in SYSTEMPATH\Model.php on line 932.
+ 1 APPPATH\Controllers\InformeGasto.php(36): CodeIgniter\Model->__call('getInformeConEmpleadoYDepartamento', [])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:29:31 --> BadMethodCallException: Call to undefined method App\Models\InformeGastoModel::getInformeConEmpleadoYDepartamento
+[Method: GET, Route: informegasto]
+in SYSTEMPATH\Model.php on line 932.
+ 1 APPPATH\Controllers\InformeGasto.php(36): CodeIgniter\Model->__call('getInformeConEmpleadoYDepartamento', [])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 22:33:21 --> mysqli_sql_exception: Table 'bd_visitamedica.informe_gasto' doesn't exist in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `informe...', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe...')
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe...')
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Models\InformeGastoModel.php(43): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\InformeGasto.php(36): App\Models\InformeGastoModel->getInformeConEmpleadoYDepartamento()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 22:33:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'bd_visitamedica.informe_gasto' doesn't exist
+[Method: GET, Route: informegasto]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\InformeGastoModel.php(43): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\InformeGasto.php(36): App\Models\InformeGastoModel->getInformeConEmpleadoYDepartamento()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:33:21 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'bd_visitamedica.informe_gasto' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\InformeGastoModel.php(43): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\InformeGasto.php(36): App\Models\InformeGastoModel->getInformeConEmpleadoYDepartamento()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 22:33:21 --> [Caused by] mysqli_sql_exception: Table 'bd_visitamedica.informe_gasto' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `informe_gasto`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`, `d`.`nombre_departamento`
+FROM `informe_gasto`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `informe_gasto`.`id_empleado`
+JOIN `departamentos` `d` ON `d`.`id_departamento` = `informe_gasto`.`id_departamento`', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\InformeGastoModel.php(43): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\InformeGasto.php(36): App\Models\InformeGastoModel->getInformeConEmpleadoYDepartamento()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\InformeGasto->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\InformeGasto))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-07 23:22:07 --> mysqli_sql_exception: Table 'bd_visitamedica.bonificaciones' doesn't exist in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `bonific...', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `bonific...')
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `bonific...')
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `bonific...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Models\BonificacionModel.php(37): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\Bonificacion.php(32): App\Models\BonificacionModel->getBonificacionesConEmpleado()
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\Bonificacion->index()
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Bonificacion))
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-11-07 23:22:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'bd_visitamedica.bonificaciones' doesn't exist
+[Method: GET, Route: bonificacion]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\BonificacionModel.php(37): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Bonificacion.php(32): App\Models\BonificacionModel->getBonificacionesConEmpleado()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Bonificacion->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Bonificacion))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 23:22:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'bd_visitamedica.bonificaciones' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\BonificacionModel.php(37): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Bonificacion.php(32): App\Models\BonificacionModel->getBonificacionesConEmpleado()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Bonificacion->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Bonificacion))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 23:22:07 --> [Caused by] mysqli_sql_exception: Table 'bd_visitamedica.bonificaciones' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `bonificaciones`.*, `e`.`nombre` AS `nombre_empleado`, `e`.`apellido` AS `apellido_empleado`
+FROM `bonificaciones`
+JOIN `empleados` `e` ON `e`.`id_empleado` = `bonificaciones`.`id_empleado`', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\BonificacionModel.php(37): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Bonificacion.php(32): App\Models\BonificacionModel->getBonificacionesConEmpleado()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Bonificacion->index()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Bonificacion))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-07 23:43:34 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "templates/main.php"
+[Method: GET, Route: bonificacion]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates/main.php')
+ 2 SYSTEMPATH\View\View.php(250): CodeIgniter\View\View->render('templates/main', [], true)
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('bonificacion/index', [], true)
+ 4 APPPATH\Controllers\Bonificacion.php(41): view('bonificacion/index', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Bonificacion->index()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Bonificacion))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

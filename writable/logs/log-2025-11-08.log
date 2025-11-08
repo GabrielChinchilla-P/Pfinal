@@ -1,0 +1,200 @@
+CRITICAL - 2025-11-08 00:40:46 --> CodeIgniter\Exceptions\ModelException: You cannot use "getCompiledSelect()" in "App\Models\EmpleadoModel". This is a method of the Query Builder Class.
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Model.php on line 948.
+ 1 SYSTEMPATH\Model.php(948): CodeIgniter\Exceptions\ModelException::forMethodNotAvailable('App\\Models\\EmpleadoModel', 'getCompiledSelect()')
+ 2 SYSTEMPATH\Model.php(928): CodeIgniter\Model->checkBuilderMethod('getCompiledSelect')
+ 3 APPPATH\Models\EmpleadoModel.php(38): CodeIgniter\Model->__call('getCompiledSelect', [])
+ 4 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 02:27:41 --> ErrorException: unlink(C:\xampp\htdocs\pp2025\ci4_Pfinal\writable\debugbar/debugbar_1762567216.790456.json): Permission denied
+[Method: GET, Route: /]
+in SYSTEMPATH\Debug\Toolbar\Collectors\History.php on line 82.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'unlink(C:\\xampp\\htdocs\\pp2025\\ci4_Pfinal\\writable\\debugbar/debugbar_1762567216.790456.json): Permission denied', 'C:\\xampp\\htdocs\\pp2025\\ci4_Pfinal\\system\\Debug\\Toolbar\\Collectors\\History.php', 82)
+ 2 SYSTEMPATH\Debug\Toolbar\Collectors\History.php(82): unlink('C:\\xampp\\htdocs\\pp2025\\ci4_Pfinal\\writable\\debugbar/debugbar_1762567216.790456.json')
+ 3 SYSTEMPATH\Debug\Toolbar.php(518): CodeIgniter\Debug\Toolbar\Collectors\History->setFiles('1762568859.764548', 20)
+ 4 SYSTEMPATH\Debug\Toolbar.php(497): CodeIgniter\Debug\Toolbar->format([...], 'html')
+ 5 APPPATH\Config\Events.php(47): CodeIgniter\Debug\Toolbar->respond()
+ 6 SYSTEMPATH\Events\Events.php(155): CodeIgniter\Events\Events::Config\{closure}()
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\Events\Events::trigger('pre_system')
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 12:00:04 --> CodeIgniter\Exceptions\ModelException: You cannot use "getCompiledSelect()" in "App\Models\EmpleadoModel". This is a method of the Query Builder Class.
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Model.php on line 948.
+ 1 SYSTEMPATH\Model.php(948): CodeIgniter\Exceptions\ModelException::forMethodNotAvailable('App\\Models\\EmpleadoModel', 'getCompiledSelect()')
+ 2 SYSTEMPATH\Model.php(928): CodeIgniter\Model->checkBuilderMethod('getCompiledSelect')
+ 3 APPPATH\Models\EmpleadoModel.php(38): CodeIgniter\Model->__call('getCompiledSelect', [])
+ 4 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 14:44:41 --> CodeIgniter\Exceptions\ModelException: You cannot use "getCompiledSelect()" in "App\Models\EmpleadoModel". This is a method of the Query Builder Class.
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Model.php on line 948.
+ 1 SYSTEMPATH\Model.php(948): CodeIgniter\Exceptions\ModelException::forMethodNotAvailable('App\\Models\\EmpleadoModel', 'getCompiledSelect()')
+ 2 SYSTEMPATH\Model.php(928): CodeIgniter\Model->checkBuilderMethod('getCompiledSelect')
+ 3 APPPATH\Models\EmpleadoModel.php(38): CodeIgniter\Model->__call('getCompiledSelect', [])
+ 4 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 14:54:40 --> InvalidArgumentException: whereNotIn() expects $values to be of type array or closure
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Database\BaseBuilder.php on line 959.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(871): CodeIgniter\Database\BaseBuilder->_whereIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`', true, 'AND ', null)
+ 2 APPPATH\Models\EmpleadoModel.php(44): CodeIgniter\Database\BaseBuilder->whereNotIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`')
+ 3 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 15:06:10 --> InvalidArgumentException: whereNotIn() expects $values to be of type array or closure
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Database\BaseBuilder.php on line 959.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(871): CodeIgniter\Database\BaseBuilder->_whereIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`', true, 'AND ', null)
+ 2 APPPATH\Models\EmpleadoModel.php(45): CodeIgniter\Database\BaseBuilder->whereNotIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`')
+ 3 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 15:07:39 --> InvalidArgumentException: whereNotIn() expects $values to be of type array or closure
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Database\BaseBuilder.php on line 959.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(871): CodeIgniter\Database\BaseBuilder->_whereIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`', true, 'AND ', null)
+ 2 APPPATH\Models\EmpleadoModel.php(44): CodeIgniter\Database\BaseBuilder->whereNotIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`')
+ 3 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 15:07:44 --> InvalidArgumentException: whereNotIn() expects $values to be of type array or closure
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Database\BaseBuilder.php on line 959.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(871): CodeIgniter\Database\BaseBuilder->_whereIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`', true, 'AND ', null)
+ 2 APPPATH\Models\EmpleadoModel.php(44): CodeIgniter\Database\BaseBuilder->whereNotIn('id_usuario', 'SELECT `id_usuario`
+FROM `empleados`')
+ 3 APPPATH\Controllers\Empleado.php(66): App\Models\EmpleadoModel->getUsuariosLibres()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 15:13:39 --> Error: Call to undefined function set_value()
+[Method: GET, Route: empleado/create]
+in APPPATH\Views\empleado\create.php on line 30.
+ 1 SYSTEMPATH\View\View.php(234): include()
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('empleado/create', [], true)
+ 4 APPPATH\Controllers\Empleado.php(74): view('empleado/create', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 15:29:12 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "layouts/main.php"
+[Method: GET, Route: empleado/create]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('layouts/main.php')
+ 2 SYSTEMPATH\View\View.php(250): CodeIgniter\View\View->render('layouts/main', [], true)
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('empleado/create', [], true)
+ 4 APPPATH\Controllers\Empleado.php(78): view('empleado/create', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empleado->create()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empleado))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-08 20:10:49 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`bd_visitamedica`.`nomina`, CONSTRAINT `nomina_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id_empleado`) ON DELETE CASCADE) in C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `no...', 0)
+#1 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `no...')
+#2 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `no...')
+#3 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `no...', Array, false)
+#4 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(840): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Model.php(802): CodeIgniter\BaseModel->insert(Array, false)
+#7 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\BaseModel.php(751): CodeIgniter\Model->insert(Array, false)
+#8 C:\xampp\htdocs\pp2025\ci4_Pfinal\app\Controllers\Nomina.php(133): CodeIgniter\BaseModel->save(Array)
+#9 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(933): App\Controllers\Nomina->store()
+#10 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+#11 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\pp2025\ci4_Pfinal\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\pp2025\ci4_Pfinal\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+CRITICAL - 2025-11-08 20:10:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Cannot add or update a child row: a foreign key constraint fails (`bd_visitamedica`.`nomina`, CONSTRAINT `nomina_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id_empleado`) ON DELETE CASCADE)
+[Method: POST, Route: nomina/store]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (:id_empleado:, :mes:, :sueldo_base:, :bonificacion:, :IGSS:, :descuentos:, :sueldo_liquido:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], false)
+ 5 SYSTEMPATH\BaseModel.php(751): CodeIgniter\Model->insert([...], false)
+ 6 APPPATH\Controllers\Nomina.php(133): CodeIgniter\BaseModel->save([...])
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->store()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 20:10:49 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Cannot add or update a child row: a foreign key constraint fails (`bd_visitamedica`.`nomina`, CONSTRAINT `nomina_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id_empleado`) ON DELETE CASCADE)
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (\'6\', \'Nov 2025\', 6800, 250, 328.44, 300, 6421.56)')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (\'6\', \'Nov 2025\', 6800, 250, 328.44, 300, 6421.56)')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (:id_empleado:, :mes:, :sueldo_base:, :bonificacion:, :IGSS:, :descuentos:, :sueldo_liquido:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], false)
+ 7 SYSTEMPATH\BaseModel.php(751): CodeIgniter\Model->insert([...], false)
+ 8 APPPATH\Controllers\Nomina.php(133): CodeIgniter\BaseModel->save([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->store()
+10 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+11 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-08 20:10:49 --> [Caused by] mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`bd_visitamedica`.`nomina`, CONSTRAINT `nomina_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id_empleado`) ON DELETE CASCADE)
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (\'6\', \'Nov 2025\', 6800, 250, 328.44, 300, 6421.56)', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (\'6\', \'Nov 2025\', 6800, 250, 328.44, 300, 6421.56)')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (\'6\', \'Nov 2025\', 6800, 250, 328.44, 300, 6421.56)')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `nomina` (`id_empleado`, `mes`, `sueldo_base`, `bonificacion`, `IGSS`, `descuentos`, `sueldo_liquido`) VALUES (:id_empleado:, :mes:, :sueldo_base:, :bonificacion:, :IGSS:, :descuentos:, :sueldo_liquido:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(840): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(802): CodeIgniter\BaseModel->insert([...], false)
+ 8 SYSTEMPATH\BaseModel.php(751): CodeIgniter\Model->insert([...], false)
+ 9 APPPATH\Controllers\Nomina.php(133): CodeIgniter\BaseModel->save([...])
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Nomina->store()
+11 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nomina))
+12 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
