@@ -61,8 +61,11 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
 });
 
 // ---------------------------------
-    // MÓDULO DE INFORMES DE GASTO (NUEVO)
+    // Rutas Informe de Gastos
     // ---------------------------------
+
+$routes->get('informe_gastos', 'InformeGastos::index');
+   
 
     $routes->get('informegasto', 'InformeGasto::index', ['filter' => 'auth']);
 
@@ -89,6 +92,7 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
 });
 
  // ---------------------------------
+
     // MÓDULO DE DEPARTAMENTO (NUEVO)
     // ---------------------------------
 
