@@ -53,23 +53,11 @@ $routes->get('empleado', 'Empleado::index', ['filter' => 'auth']);
 $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     
     // MÓDULO DE EMPLEADOS
-    // R - Listar Empleados (Empleado::index)
-    $routes->get('empleado', 'Empleado::index');
-    
-    // C - Crear Nuevo Empleado (Formulario) (Empleado::create)
-    $routes->get('empleado/create', 'Empleado::create');
-    
-    // C - Guardar Nuevo Empleado (Proceso POST) (Empleado::store)
-    $routes->post('empleado/store', 'Empleado::store');
-    
-    // U - Editar Empleado (Formulario pre-llenado) (Empleado::edit)
-    $routes->get('empleado/edit/(:num)', 'Empleado::edit/$1');
-    
-    // U - Actualizar Empleado (Proceso POST) (CORREGIDO: 'Empleado' en mayúscula)
-    $routes->post('empleado/update/(:num)', 'Empleado::update/$1');
-    
-    // D - Eliminar Empleado (Empleado::delete)
-    $routes->get('empleado/delete/(:num)', 'Empleado::delete/$1');
+    $routes->get('/empleados', 'Empleados::index');
+    $routes->get('/empleados/buscar', 'Empleados::buscar');
+    $routes->post('/empleados/store', 'Empleados::store');
+    $routes->post('/empleados/update/(:any)', 'Empleados::update/$1');
+    $routes->get('/empleados/delete/(:any)', 'Empleados::delete/$1');
 });
 
 // ---------------------------------
