@@ -1,4 +1,4 @@
-<?php $this->extend('templates/main'); ?>
+<?= view('templates/header') ?>
 
 <div class="container mt-4">
     <h2 class="text-center mb-4">Bonificación por Ventas</h2>
@@ -75,7 +75,7 @@
     </a>
 </div>
 
-<!-- 🟩 Modal de Crear / Editar -->
+<!-- Modal de Crear / Editar -->
 <div class="modal fade" id="modalBonificacion" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -104,6 +104,51 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Créditos -->
+<div class="modal fade" id="modalCreditos" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title"><i class="bi bi-person-lines-fill"></i> Créditos del Proyecto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="fw-bold text-center mb-3">Sistema Web de Visitas Médicas - Módulo de Bonificación</p>
+
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark text-center">
+            <tr>
+              <th>Carnet</th>
+              <th>Nombre</th>
+              <th>Procesos trabajados</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">  
+          <tr>
+              <td>202206632</td>
+              <td>José Carlos Gálvez Manzo</td>
+              <td class="text-start">
+                <ul class="mb-0">
+                  <li>Diseño de la base de datos <code>bd_visitasmedicas</code></li>
+                  <li>CRUD completo de Bonificación (buscar, guardar, editar, eliminar)</li>
+                  <li>Integración con DataTables y Bootstrap 5</li>
+                  <li>Cálculo automático de bonificación</li>
+                  <li>Implementación de rutas, modelos, controladores y vistas</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
     </div>
   </div>
 </div>
