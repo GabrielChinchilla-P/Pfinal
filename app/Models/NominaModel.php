@@ -23,18 +23,24 @@ class NominaModel extends Model
     // ==========================================================
     // 💡 VERIFICACIÓN CRÍTICA: REGLAS Y MENSAJES DE VALIDACIÓN
     // ==========================================================
-    protected $validationRules = [
-        'id_empleado'    => 'required|integer', // 'integer' para asegurar que es un número
+protected $validationRules = [
+        // 💡 REGLA CRÍTICA: Verifica que el id_empleado exista en la tabla empleados
+        'id_empleado'    => 'required|integer|is_not_unique[empleados.id_empleado]', 
         'mes'            => 'required|max_length[10]', 
         'sueldo_base'    => 'required|numeric|greater_than[0]',
         'bonificacion'   => 'permit_empty|numeric|greater_than_equal_to[0]',
         'descuentos'     => 'permit_empty|numeric|greater_than_equal_to[0]',
     ];
+
+
+        
     
-    protected $validationMessages = [
+       protected $validationMessages = [
         'id_empleado' => [
-            'required' => 'Debe seleccionar un empleado.',
-            'integer'  => 'El ID del empleado debe ser un número entero.',
+            'required'      => 'Debe seleccionar un empleado.',
+            'integer'       => 'El ID del empleado debe ser un número entero.',
+            'is_not_unique' => 'El empleado seleccionado no existe en la tabla de empleados (fallo de clave foránea).', // 👈 Mensaje claro
+        
             // Si necesitas validar la existencia, asegúrate de que el campo exista 
             // en la tabla de referencia (ej: 'is_not_unique[empleados.id_empleado]')
             // Si esta regla está causando el fallo, revísala cuidadosamente:
@@ -68,4 +74,6 @@ class NominaModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    
 }
