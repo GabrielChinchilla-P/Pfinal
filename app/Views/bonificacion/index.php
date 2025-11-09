@@ -1,82 +1,109 @@
 <?php $this->extend('templates/main'); ?>
 
-<?php $this->section('content'); ?>
-<div class="container mx-auto p-4">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-4xl font-extrabold text-gray-900 border-b-4 border-indigo-600 pb-2">Bonificaciones de Empleados</h1>
-        <a href="<?= base_url('bonificacion/create'); ?>" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-105 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-            </svg>
-            Nueva Bonificación
-        </a>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Bonificación por Ventas</h2>
+
+    <!-- Botón Créditos -->
+    <div class="text-center mb-4">
+        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreditos">
+            <i class="bi bi-people-fill"></i> Ver Créditos del Equipo
+        </button>
     </div>
 
-    <!-- Barra de Búsqueda y Filtros -->
-    <div class="mb-6 bg-white p-4 rounded-xl shadow-lg">
-        <form action="<?= base_url('bonificacion'); ?>" method="get" class="flex items-center space-x-4">
-            <input 
-                type="text" 
-                name="q" 
-                placeholder="Buscar por empleado..." 
-                value="<?= esc($searchQuery ?? '') ?>"
-                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                Buscar
-            </button>
-            <?php if ($searchQuery): ?>
-                <a href="<?= base_url('bonificacion'); ?>" class="text-red-500 hover:text-red-700 font-semibold py-2 px-4 rounded-lg transition duration-300">
-                    Limpiar
-                </a>
-            <?php endif; ?>
-        </form>
-    </div>
+     <!-- Alertas -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php elseif (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+    
+    <!-- Buscar -->
+    <form class="d-flex mb-3" method="get" action="<?= base_url('/bonificacion/buscar'); ?>">
+        <input type="text" name="q" class="form-control me-2" placeholder="Buscar por ID o nombre...">
+        <button class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+        <a href="<?= base_url('/bonificacion'); ?>" class="btn btn-secondary ms-2"><i class="bi bi-arrow-clockwise"></i> Limpiar</a>
+    </form>
 
-    <!-- Tabla de Listado -->
-    <div class="overflow-x-auto bg-white rounded-xl shadow-2xl">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">ID</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Empleado</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Ventas del Mes</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Porcentaje</th>
-                    <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Monto Calculado</th>
-                    <th class="px-6 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-100">
-                <?php if (empty($bonificaciones)): ?>
-                    <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No se encontraron bonificaciones.</td>
-                    </tr>
-                <?php else: ?>
-                    <?php foreach ($bonificaciones as $bonificacion): ?>
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= esc($bonificacion['id_bonificacion']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= esc($bonificacion['nombre_empleado'] . ' ' . $bonificacion['apellido_empleado']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">$<?= number_format(esc($bonificacion['ventas_mes']), 2); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= number_format(esc($bonificacion['porcentaje']) * 100, 2); ?>%</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">$<?= number_format(esc($bonificacion['monto']), 2); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                                <a href="<?= base_url('bonificacion/edit/' . $bonificacion['id_bonificacion']); ?>" class="text-yellow-600 hover:text-yellow-800 transition duration-150 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                                <a href="<?= base_url('bonificacion/delete/' . $bonificacion['id_bonificacion']); ?>" class="text-red-600 hover:text-red-800 transition duration-150" onclick="return confirm('¿Está seguro de que desea eliminar esta bonificación?');">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 100 2v6a1 1 0 100-2V8z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
+    <!-- Botón nuevo -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalBonificacion">
+        <i class="bi bi-plus-circle"></i> Nueva Bonificación
+    </button>
+
+    <!-- Tabla -->
+    <table id="tablaBonificacion" class="table table-bordered table-striped">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>ID Visitador</th>
+                <th>Nombre Visitador</th>
+                <th>Ventas Totales (Q)</th>
+                <th>Bonificación (Q)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($bonificacion as $b): ?>
+            <tr>
+                <td><?= esc($b['id_visitador']) ?></td>
+                <td><?= esc($b['nombre_visitador']) ?></td>
+                <td><?= number_format($b['ventas_totales'], 2) ?></td>
+                <td><?= number_format($b['bonificacion'], 2) ?></td>
+                <td class="text-center">
+                    <button class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalBonificacion"
+                            data-id="<?= esc($b['id_visitador']) ?>"
+                            data-nombre="<?= esc($b['nombre_visitador']) ?>"
+                            data-ventas="<?= esc($b['ventas_totales']) ?>">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <a href="<?= base_url('/bonificacion/delete/' . $b['id_visitador']); ?>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Está seguro de eliminar esta bonificación?')">
+                       <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
-<?php $this->endSection(); ?>
+
+<!-- Botón regresar al menú -->
+<div class="text-center mb-3">
+    <a href="<?= base_url('/menu'); ?>" class="btn btn-warning">
+        <i class="bi bi-arrow-left-circle"></i> Regresar al Menú Principal
+    </a>
+</div>
+
+<!-- 🟩 Modal de Crear / Editar -->
+<div class="modal fade" id="modalBonificacion" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" id="formBonificacion">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title"><i class="bi bi-cash-coin"></i> Registrar Bonificación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label>ID Visitador</label>
+                <input type="text" class="form-control" name="id_visitador" id="id_visitador" required>
+            </div>
+            <div class="mb-3">
+                <label>Nombre Visitador</label>
+                <input type="text" class="form-control" name="nombre_visitador" id="nombre_visitador" required>
+            </div>
+            <div class="mb-3">
+                <label>Ventas Totales (Q)</label>
+                <input type="number" step="0.01" class="form-control" name="ventas_totales" id="ventas_totales" required>
+            </div>
+            <p class="text-muted"><small>La bonificación se calculará automáticamente según el total de ventas.</small></p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
