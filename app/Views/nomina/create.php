@@ -6,16 +6,27 @@
     </div>
     <div class="card-body">
 
+        <label for="id_empleado">Empleado:</label>
+        <select name="id_empleado" id="id_empleado" class="form-control" required>
+            <option value="">Seleccione un empleado...</option>
+            <?php foreach ($empleados as $empleado): ?>
+            <option value="<?= esc($empleado['id_empleado']); ?>"
+                <?= set_select('id_empleado', $empleado['id_empleado']); ?>>
+                <?= esc($empleado['nombre']); ?> <?= esc($empleado['apellido']); ?> (<?= esc($empleado['usuario']); ?>)
+            </option>
+            <?php endforeach; ?>
+        </select>
+
         <!-- Manejo de Errores de Validación -->
         <?php if ($validation->getErrors()): ?>
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">¡Error de Validación!</h4>
-                <ul>
-                    <?php foreach ($validation->getErrors() as $error): ?>
-                        <li><?= esc($error); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">¡Error de Validación!</h4>
+            <ul>
+                <?php foreach ($validation->getErrors() as $error): ?>
+                <li><?= esc($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <?php endif; ?>
 
         <!-- Formulario de Cálculo de Nómina -->
@@ -30,11 +41,11 @@
                         <select name="id_empleado" id="id_empleado" class="form-control" required>
                             <option value="">Seleccione un Empleado</option>
                             <?php foreach ($empleados as $empleado): ?>
-                                <!-- selected si es el valor antiguo (old) -->
-                                <option value="<?= esc($empleado['id_usuario']); ?>" 
-                                    <?= set_select('id_empleado', $empleado['id_usuario']); ?>>
-                                    <?= esc($empleado['nombre']); ?> (<?= esc($empleado['usuario']); ?>)
-                                </option>
+                            <!-- selected si es el valor antiguo (old) -->
+                            <option value="<?= esc($empleado['id_usuario']); ?>"
+                                <?= set_select('id_empleado', $empleado['id_usuario']); ?>>
+                                <?= esc($empleado['nombre']); ?> (<?= esc($empleado['usuario']); ?>)
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -42,8 +53,8 @@
                     <div class="form-group mb-3">
                         <label for="mes">Mes de Pago (*)</label>
                         <!-- Recomendamos usar input type=month si es soportado, sino text con formato -->
-                        <input type="text" name="mes" id="mes" class="form-control" placeholder="Ej: Octubre 2024" required 
-                            value="<?= set_value('mes', date('M Y')); ?>">
+                        <input type="text" name="mes" id="mes" class="form-control" placeholder="Ej: Octubre 2024"
+                            required value="<?= set_value('mes', date('M Y')); ?>">
                     </div>
                 </div>
 
@@ -51,31 +62,33 @@
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="sueldo_base">Sueldo Base (*)</label>
-                        <input type="number" step="0.01" name="sueldo_base" id="sueldo_base" class="form-control" required
-                            value="<?= set_value('sueldo_base'); ?>">
+                        <input type="number" step="0.01" name="sueldo_base" id="sueldo_base" class="form-control"
+                            required value="<?= set_value('sueldo_base'); ?>">
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="bonificacion">Bonificación (opcional)</label>
-                        <input type="number" step="0.01" name="bonificacion" id="bonificacion" class="form-control" 
+                        <input type="number" step="0.01" name="bonificacion" id="bonificacion" class="form-control"
                             value="<?= set_value('bonificacion', 0); ?>">
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="descuentos">Otros Descuentos (opcional)</label>
-                        <input type="number" step="0.01" name="descuentos" id="descuentos" class="form-control" 
+                        <input type="number" step="0.01" name="descuentos" id="descuentos" class="form-control"
                             value="<?= set_value('descuentos', 0); ?>">
                     </div>
-                    
+
                     <p class="text-info mt-4">
-                        <i class="fa-solid fa-circle-info"></i> El **IGSS** se calcula automáticamente (4.83% sobre Sueldo Base).
+                        <i class="fa-solid fa-circle-info"></i> El **IGSS** se calcula automáticamente (4.83% sobre
+                        Sueldo Base).
                     </p>
                 </div>
             </div>
 
             <hr>
-            
-            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Registrar y Calcular Nómina</button>
+
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Registrar y Calcular
+                Nómina</button>
             <a href="<?= base_url('nomina'); ?>" class="btn btn-secondary">Cancelar</a>
 
         </form>
