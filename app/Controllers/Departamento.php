@@ -73,5 +73,14 @@ public function buscar()
             return redirect()->back()->with('error', 'Error al actualizar el departamento.');
         }
     }
+    // ❌ Eliminar
+    public function delete($id)
+    {
+        if ($this->departamentosModel->delete($id)) {
+            return redirect()->to('/departamentos')->with('success', 'Departamento eliminado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'Error al eliminar el departamento.');
+        }
+    }
 
 }
