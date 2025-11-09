@@ -120,3 +120,47 @@
     </div>
   </div>
 </div>
+<!-- 🪪 Modal de Créditos -->
+<div class="modal fade" id="modalCreditos" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title"><i class="bi bi-person-lines-fill"></i> Créditos del Proyecto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="fw-bold text-center mb-3">Sistema Web de Visitas Médicas - Módulo de Departamentos</p>
+
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark text-center">
+            <tr>
+              <th>Carnet</th>
+              <th>Nombre</th>
+              <th>Procesos trabajados</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr>
+              <td>202206632</td>
+              <td>José Carlos Gálvez Manzo</td>
+              <td class="text-start">
+                <ul class="mb-0">
+                  <li>Desarrollo del CRUD de Departamentos (buscar, guardar, editar, eliminar)</li>
+                  <li>Diseño e integración con Bootstrap 5 y DataTables</li>
+                  <li>Cálculo automático de gastos de combustible</li>
+                  <li>Conexión con base de datos <code>bd_visitasmedicas</code></li>
+                  <li>Implementación de modales y alertas dinámicas</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
