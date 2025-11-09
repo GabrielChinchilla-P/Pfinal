@@ -140,17 +140,17 @@
                     </thead>
                     <tbody class="text-center">
                         <tr>
-                            <td>202206632</td>
-                            <td>José Carlos Gálvez Manzo</td>
+                            <td>202108186</td>
+                            <td>Carmen alicia Zet Siney</td>
                             <td class="text-start">
                                 <ul class="mb-0">
                                     <li>Desarrollo del CRUD de Departamentos (buscar, guardar, editar, eliminar)</li>
                                     <li>Diseño e integración con Bootstrap 5 y DataTables</li>
                                     <li>Cálculo automático de gastos de combustible</li>
-                                    <li>Conexión con base de datos <code>bd_visitasmedicas</code></li>
                                     <li>Implementación de modales y alertas dinámicas</li>
                                 </ul>
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>

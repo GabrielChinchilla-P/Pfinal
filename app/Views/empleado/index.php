@@ -103,6 +103,29 @@
   </div>
 </div>
 
+<table class="table table-bordered table-striped">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Carnet</th>
+                    <th>Nombre</th>
+                    <th>Procesos trabajados</th>
+                </tr>
+            </thead>
+                <tbody class="text-center">
+                    <tr>
+                        <td>202112444</td>
+                        <td>Katherine Nicole Villavicencio Cabrera</td>
+                        <td class="text-start">
+                            <ul class="mb-0">
+                                <li>Desarrollo del CRUD de Empleados (buscar, guardar, editar, eliminar)</li>
+                                <li>Diseño e integración con Bootstrap 5 y DataTables</li>
+                                <li>Implementación de modales y alertas dinámicas</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+</table>
+
 <script>
     const modalEmp = document.getElementById('modalEmpleado');
     modalEmp.addEventListener('show.bs.modal', function (event) {

@@ -13,7 +13,7 @@ class Bonificacion extends Controller
         $this->bonificacionModel = new BonificacionModel();
     }
 
- // 📋 Listar registros
+ // Listar registros
     public function index()
     {
         $data['bonificacion'] = $this->bonificacionModel->findAll();
@@ -22,7 +22,7 @@ class Bonificacion extends Controller
         echo view('templates/footer');
     }
 
-    // 🔍 Buscar
+    // Buscar
     public function buscar()
     {
         $busqueda = $this->request->getGet('q');
@@ -40,7 +40,7 @@ class Bonificacion extends Controller
         echo view('templates/footer');
     }
 
-     // 🟢 Guardar nuevo
+     // Guardar nuevo
     public function store()
     {
         $data = $this->request->getPost([
@@ -67,7 +67,7 @@ class Bonificacion extends Controller
         }
     }
 
-    // ✏️ Editar registro
+    // Editar registro
     public function update($id)
     {
         $data = $this->request->getPost([
@@ -92,8 +92,8 @@ class Bonificacion extends Controller
             return redirect()->back()->with('error', 'No se realizaron cambios.');
         }
     }
-    
- // ❌ Eliminar
+
+ // Eliminar
     public function delete($id)
     {
         if ($this->bonificacionModel->delete($id)) {
