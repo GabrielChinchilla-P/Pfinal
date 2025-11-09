@@ -8,6 +8,12 @@
         <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
 
+    <!-- Búsqueda -->
+    <form class="d-flex mb-3" method="get" action="<?= base_url('/empleados/buscar'); ?>">
+        <input type="text" name="q" class="form-control me-2" placeholder="Buscar empleado...">
+        <button class="btn btn-primary">Buscar</button>
+        <a href="<?= base_url('/empleados'); ?>" class="btn btn-secondary ms-2">Limpiar</a>
+    </form>
 
 
 
