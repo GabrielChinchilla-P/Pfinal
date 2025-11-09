@@ -16,8 +16,13 @@
     <?php elseif (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
-
-
+    
+    <!-- 🔍 Buscar -->
+    <form class="d-flex mb-3" method="get" action="<?= base_url('/bonificacion/buscar'); ?>">
+        <input type="text" name="q" class="form-control me-2" placeholder="Buscar por ID o nombre...">
+        <button class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+        <a href="<?= base_url('/bonificacion'); ?>" class="btn btn-secondary ms-2"><i class="bi bi-arrow-clockwise"></i> Limpiar</a>
+    </form>
 
 
 
