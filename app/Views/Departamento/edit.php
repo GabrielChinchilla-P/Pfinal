@@ -36,7 +36,7 @@
             <div class="d-flex justify-content-end mt-4">
                 <a href="<?= base_url('departamento'); ?>" class="btn btn-secondary me-2">Cancelar</a>
                 <button type="submit" class="btn btn-warning">
-                    <i class="fa-solid fa-sync-alt"></i> Departametagit
+                    <i class="fa-solid fa-sync-alt"></i> Depart
                 </button>
             </div>
 
