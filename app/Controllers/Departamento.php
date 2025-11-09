@@ -57,7 +57,7 @@ class Departamentos extends Controller
         }
     }
 
-// ✏️ Editar
+ // ✏️ Editar
     public function update($id)
     {
         $data = $this->request->getPost([

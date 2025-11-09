@@ -53,11 +53,23 @@ $routes->get('empleado', 'Empleado::index', ['filter' => 'auth']);
 $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     
     // MÓDULO DE EMPLEADOS
-    $routes->get('/empleados', 'Empleados::index');
-    $routes->get('/empleados/buscar', 'Empleados::buscar');
-    $routes->post('/empleados/store', 'Empleados::store');
-    $routes->post('/empleados/update/(:any)', 'Empleados::update/$1');
-    $routes->get('/empleados/delete/(:any)', 'Empleados::delete/$1');
+    // R - Listar Empleados (Empleado::index)
+    $routes->get('empleado', 'Empleado::index');
+    
+    // C - Crear Nuevo Empleado (Formulario) (Empleado::create)
+    $routes->get('empleado/create', 'Empleado::create');
+    
+    // C - Guardar Nuevo Empleado (Proceso POST) (Empleado::store)
+    $routes->post('empleado/store', 'Empleado::store');
+    
+    // U - Editar Empleado (Formulario pre-llenado) (Empleado::edit)
+    $routes->get('empleado/edit/(:num)', 'Empleado::edit/$1');
+    
+    // U - Actualizar Empleado (Proceso POST) (CORREGIDO: 'Empleado' en mayúscula)
+    $routes->post('empleado/update/(:num)', 'Empleado::update/$1');
+    
+    // D - Eliminar Empleado (Empleado::delete)
+    $routes->get('empleado/delete/(:num)', 'Empleado::delete/$1');
 });
 
 // ---------------------------------
@@ -88,40 +100,35 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
 
 });
 
-// ---------------------------------
+ // ---------------------------------
     // MÓDULO DE DEPARTAMENTO (NUEVO)
     // ---------------------------------
 
-    $routes->get('departamento', 'Departamento::index', ['filter' => 'auth']);
+    $routes->get('departamentos', 'Departamentos::index');
+    $routes->get('/departamentos/buscar', 'Departamentos::buscar');
+    $routes->post('departamentos/store', 'Departamentos::store');
+    $routes->post('departamentos/update/(:any)', 'Departamentos::update/$1');
+    $routes->get('departamentos/delete/(:any)', 'Departamentos::delete/$1'); 
 
-    $routes->group('/', ['filter' => 'auth'], static function ($routes) {
+    // --- Rutas para el Módulo de Bonificaciones ---
+    $routes->get('bonificacion', 'Bonificacion::index', ['filter' => 'auth']);
+    
+    $routes->group('/', ['filter' => 'auth'], static function ($routes){
+    // Listado y Búsqueda (GET /bonificacion)
+    $routes->get('/', 'Bonificacion::index'); 
 
-    // R - Listar Departamentos
-    $routes->get('departamento', 'Departamento::index');
+    // Formulario de Creación (GET /bonificacion/create)
+    $routes->get('create', 'Bonificacion::create');
     
-    // C - Crear Nuevo Departamento (Formulario)
-    $routes->get('departamento/create', 'Departamento::create');
+    // Procesa el guardado (POST /bonificacion/store)
+    $routes->post('store', 'Bonificacion::store');
     
-    // C - Guardar Nuevo Departamento (Proceso POST)
-    $routes->post('departamento/store', 'Departamento::store');
+    // Formulario de Edición (GET /bonificacion/edit/ID)
+    $routes->get('edit/(:num)', 'Bonificacion::edit/$1');
     
-    // U - Editar Departamento (Formulario pre-llenado)
-    $routes->get('departamento/edit/(:num)', 'Departamento::edit/$1');
+    // Procesa la actualización (POST /bonificacion/update/ID)
+    $routes->post('update/(:num)', 'Bonificacion::update/$1');
     
-    // U - Actualizar Departamento (Proceso POST)
-    $routes->post('departamento/update/(:num)', 'Departamento::update/$1');
-    
-    // D - Eliminar Departamento
-    $routes->get('departamento/delete/(:num)', 'Departamento::delete/$1');
-
-    });
-
-    // ---------------------------------
-    // MÓDULO DE BONIFICACIÓN (NUEVO)
-    // ---------------------------------
-    $routes->get('/bonificacion', 'Bonificacion::index');
-    $routes->get('/bonificacion/buscar', 'Bonificacion::buscar');
-    $routes->post('/bonificacion/store', 'Bonificacion::store');
-    $routes->post('/bonificacion/update/(:any)', 'Bonificacion::update/$1');
-    $routes->get('/bonificacion/delete/(:any)', 'Bonificacion::delete/$1');
+    // Eliminar registro (GET /bonificacion/delete/ID)
+    $routes->get('delete/(:num)', 'Bonificacion::delete/$1');
 });
