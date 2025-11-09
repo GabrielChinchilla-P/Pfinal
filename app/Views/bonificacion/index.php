@@ -152,7 +152,7 @@
   </div>
 </div>
 
-c<!-- 🔧 Script del modal CRUD -->
+<!-- Script del modal CRUD -->
 <script>
     const modal = document.getElementById('modalBonificacion');
     modal.addEventListener('show.bs.modal', function (event) {
