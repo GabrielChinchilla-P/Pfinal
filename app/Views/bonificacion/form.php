@@ -7,7 +7,7 @@
     <?php endif; ?>
     
     <div class="space-y-6">
-        <!-- Campo ID Empleado -->
+        <!-- ID Empleado - Campo -->
         <div>
             <label for="id_empleado" class="block text-sm font-medium text-gray-700 mb-1">Empleado</label>
             <select name="id_empleado" id="id_empleado" required class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
