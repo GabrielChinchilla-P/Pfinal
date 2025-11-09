@@ -20,6 +20,51 @@
         <i class="bi bi-plus-circle"></i> Nuevo Empleado
     </button>
 
+    <!-- Tabla -->
+    <table id="tablaEmpleados" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Departamento</th>
+                <th>Fecha Ingreso</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($empleados as $e): ?>
+            <tr>
+                <td><?= $e['cod_empleado'] ?></td>
+                <td><?= $e['nombre'] ?></td>
+                <td><?= $e['apellido'] ?></td>
+                <td><?= $e['departamento'] ?></td>
+                <td><?= $e['fecha_ingreso'] ?></td>
+                <td>
+                    <button class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalEmpleado"
+                            data-id="<?= $e['cod_empleado'] ?>"
+                            data-nombre="<?= $e['nombre'] ?>"
+                            data-apellido="<?= $e['apellido'] ?>"
+                            data-departamento="<?= $e['departamento'] ?>"
+                            data-fecha="<?= $e['fecha_ingreso'] ?>">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <a href="<?= base_url('/empleados/delete/' . $e['cod_empleado']); ?>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Seguro que desea eliminar este empleado?')">
+                       <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 
