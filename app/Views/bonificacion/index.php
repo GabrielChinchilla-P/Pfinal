@@ -130,11 +130,10 @@
           </thead>
           <tbody class="text-center">  
           <tr>
-              <td>202206632</td>
-              <td>José Carlos Gálvez Manzo</td>
+              <td>201500997</td>
+              <td>Ana Lucía Miranda De León</td>
               <td class="text-start">
                 <ul class="mb-0">
-                  <li>Diseño de la base de datos <code>bd_visitasmedicas</code></li>
                   <li>CRUD completo de Bonificación (buscar, guardar, editar, eliminar)</li>
                   <li>Integración con DataTables y Bootstrap 5</li>
                   <li>Cálculo automático de bonificación</li>
