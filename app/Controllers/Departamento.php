@@ -40,5 +40,38 @@ public function buscar()
         . view('departamentos/index', ['departamentos' => $departamentos])
         . view('templates/footer');
 }
+// 🟢 Guardar
+    public function store()
+{
+    $data = $this->request->getPost([
+        'depto', 'descripcion', 'distancia', 'alojamiento', 'alimentacion'
+    ]);
+
+    $data['combustible'] = (float)$data['distancia'] * 30.54;
+
+    $this->departamentosModel->insert($data);
+
+    if ($this->departamentosModel->db->affectedRows() > 0) {
+        return redirect()->to('/departamentos')->with('success', 'Departamento agregado correctamente.');
+    } else {
+        return redirect()->back()->with('error', 'No se realizaron cambios (verifique el código del departamento).');
+    }
+}
+
+    // ✏️ Editar
+    public function update($id)
+    {
+        $data = $this->request->getPost([
+            'descripcion', 'distancia', 'alojamiento', 'alimentacion'
+        ]);
+
+        $data['combustible'] = (float)$data['distancia'] * 30.54;
+
+        if ($this->departamentosModel->update($id, $data)) {
+            return redirect()->to('/departamentos')->with('success', 'Departamento actualizado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'Error al actualizar el departamento.');
+        }
+    }
 
 }
