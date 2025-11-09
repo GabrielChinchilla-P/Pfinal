@@ -1,79 +1,82 @@
-<?php 
+<?php
+
 namespace App\Models;
 
 use CodeIgniter\Model;
 
 class NominaModel extends Model
 {
-    protected $table            = 'nomina'; 
-    protected $primaryKey       = 'id_nomina'; 
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false; 
+    // 🧾 Nombre de la tabla en la base de datos
+    protected $table = 'nomina';
 
+    // 🔑 Clave primaria
+    protected $primaryKey = 'id_nomina';
+
+    // 🛡️ Permitir autoincremento
+    protected $useAutoIncrement = true;
+
+    // 🧩 Campos que se pueden insertar o actualizar
     protected $allowedFields = [
-        'id_empleado', 
-        'mes', 
-        'sueldo_base', 
-        'bonificacion', 
-        'IGSS', 
-        'descuentos', 
+        'id_empleado',
+        'mes',
+        'sueldo_base',
+        'bonificacion',
+        'IGSS',
+        'descuentos',
         'sueldo_liquido'
-    ]; 
-
-    // ==========================================================
-    // 💡 VERIFICACIÓN CRÍTICA: REGLAS Y MENSAJES DE VALIDACIÓN
-    // ==========================================================
-protected $validationRules = [
-        // 💡 REGLA CRÍTICA: Verifica que el id_empleado exista en la tabla empleados
-        'id_empleado'    => 'required|integer|is_not_unique[empleados.id_empleado]', 
-        'mes'            => 'required|max_length[10]', 
-        'sueldo_base'    => 'required|numeric|greater_than[0]',
-        'bonificacion'   => 'permit_empty|numeric|greater_than_equal_to[0]',
-        'descuentos'     => 'permit_empty|numeric|greater_than_equal_to[0]',
     ];
 
+    // ⚙️ Retornar los resultados como objetos
+    protected $returnType = 'object';
 
-        
-    
-       protected $validationMessages = [
+    // 🔒 Validaciones automáticas
+    protected $validationRules = [
+        'id_empleado'    => 'required|integer',
+        'mes'            => 'required|string|max_length[50]',
+        'sueldo_base'    => 'required|decimal',
+        'bonificacion'   => 'permit_empty|decimal',
+        'IGSS'           => 'permit_empty|decimal',
+        'descuentos'     => 'permit_empty|decimal',
+        'sueldo_liquido' => 'permit_empty|decimal',
+    ];
+
+    // 📋 Mensajes de error personalizados
+    protected $validationMessages = [
         'id_empleado' => [
-            'required'      => 'Debe seleccionar un empleado.',
-            'integer'       => 'El ID del empleado debe ser un número entero.',
-            'is_not_unique' => 'El empleado seleccionado no existe en la tabla de empleados (fallo de clave foránea).', // 👈 Mensaje claro
-        
-            // Si necesitas validar la existencia, asegúrate de que el campo exista 
-            // en la tabla de referencia (ej: 'is_not_unique[empleados.id_empleado]')
-            // Si esta regla está causando el fallo, revísala cuidadosamente:
-            // 'is_not_unique' => 'El empleado seleccionado no es válido o no existe en la base de datos.',
+            'required' => 'Debe seleccionar un empleado válido.'
         ],
         'mes' => [
-            'required'   => 'El mes es obligatorio.',
-            'max_length' => 'El campo Mes no puede exceder 10 caracteres.'
+            'required' => 'El campo "Mes" es obligatorio.'
         ],
         'sueldo_base' => [
-            'required'     => 'El sueldo base es obligatorio.',
-            'numeric'      => 'El sueldo base debe ser un número.',
-            'greater_than' => 'El sueldo base debe ser mayor a cero.',
+            'required' => 'Debe ingresar el sueldo base del empleado.',
+            'decimal'  => 'El sueldo base debe ser un número válido.'
         ],
-        // ... (otros mensajes si son necesarios)
     ];
 
-    // ... (El método getNominaConEmpleado() corregido previamente)
+    // 🚫 Sin validación automática al guardar
+    protected $skipValidation = false;
 
-    public function getNominaConEmpleado()
+    /**
+     * 🔍 Obtiene todas las nóminas con datos de empleados y usuarios
+     */
+    public function getNominasConEmpleados()
     {
-        return $this->db->table($this->table)
-            ->select('
-                nomina.*, 
-                empleados.nombre as nombre_empleado, 
-                usuarios.usuario as nombre_usuario
+        return $this->select('
+                nomina.id_nomina,
+                nomina.mes,
+                nomina.sueldo_base,
+                nomina.bonificacion,
+                nomina.IGSS,
+                nomina.descuentos,
+                nomina.sueldo_liquido,
+                empleados.nombre AS nombre_empleado,
+                empleados.apellido AS apellido_empleado,
+                usuarios.usuario AS nombre_usuario
             ')
-            ->join('empleados', 'empleados.id_empleado = nomina.id_empleado') 
-            ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario') 
+            ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left')
+            ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left')
             ->orderBy('nomina.mes', 'DESC')
-            ->get()
-            ->getResultArray();
+            ->findAll();
     }
-
-    
 }
