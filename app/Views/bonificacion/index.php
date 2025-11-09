@@ -12,6 +12,13 @@
         </a>
     </div>
 
+     <!-- 🪪 Botón Créditos -->
+    <div class="text-center mb-4">
+        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreditos">
+            <i class="bi bi-people-fill"></i> Ver Créditos del Equipo
+        </button>
+    </div>
+
     <!-- Barra de Búsqueda y Filtros -->
     <div class="mb-6 bg-white p-4 rounded-xl shadow-lg">
         <form action="<?= base_url('bonificacion'); ?>" method="get" class="flex items-center space-x-4">
