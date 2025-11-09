@@ -35,6 +35,7 @@
                                     <option value="<?= esc($empleado['id_usuario']); ?>"
                                         <?= set_select('id_empleado', $empleado['id_usuario']); ?>>
                                         <?= esc($empleado['nombre']); ?> 
+                                        <?= esc($empleado['apellido']); ?>
                                         (<?= esc($empleado['usuario']); ?>)
                                     </option>
                                 <?php endforeach; ?>
