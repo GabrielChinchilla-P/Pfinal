@@ -1,108 +1,191 @@
-<?= $this->include('layouts/header'); ?>
+<?= view('templates/header') ?>
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-primary text-white">
-        <h1 class="h3 mb-0"><i class="fa-solid fa-building"></i> <?= esc($title); ?></h1>
-        <a href="<?= base_url('departamento/create'); ?>" class="btn btn-warning btn-sm">
-            <i class="fa-solid fa-plus"></i> Crear Nuevo Departamento
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Departamentos</h2>
+
+    <!-- 🔙 Botón regresar al menú -->
+    <div class="text-center mb-3">
+        <a href="<?= base_url('/menu'); ?>" class="btn btn-warning">
+            <i class="bi bi-arrow-left-circle"></i> Regresar al Menú Principal
         </a>
     </div>
-    <div class="card-body">
-        
-        <!-- Formulario de Búsqueda -->
-        <form action="<?= base_url('departamento'); ?>" method="get" class="mb-4">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Buscar por nombre o distancia..." 
-                       value="<?= esc($searchQuery); ?>">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
-                    <?php if ($searchQuery): ?>
-                        <a href="<?= base_url('departamento'); ?>" class="btn btn-outline-secondary">Limpiar</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </form>
 
-        <h2 class="h5 mb-3">Listado de Departamentos</h2>
-        
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre del Departamento</th>
-                        <th>Distancia (Km)</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($departamentos)): ?>
-                        <tr>
-                            <td colspan="4" class="text-center text-muted">
-                                <?php if ($searchQuery): ?>
-                                    No se encontraron resultados para la búsqueda: **<?= esc($searchQuery); ?>**.
-                                <?php else: ?>
-                                    No hay departamentos registrados.
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($departamentos as $depto): ?>
-                        <tr>
-                            <td><?= esc($depto['id_departamento']); ?></td>
-                            <td><?= esc($depto['nombre_departamento']); ?></td>
-                            <td><?= number_format($depto['distancia_km'], 2); ?></td>
-                            <td>
-                                <!-- Botón Editar -->
-                                <a href="<?= base_url('departamento/edit/' . $depto['id_departamento']); ?>" class="btn btn-sm btn-warning" title="Editar"><i class="fa-solid fa-pencil"></i></a>
-                                
-                                <!-- Botón Eliminar (usando SweetAlert para confirmación) -->
-                                <button type="button" class="btn btn-sm btn-danger delete-btn" 
-                                        data-id="<?= esc($depto['id_departamento']); ?>" 
-                                        data-nombre="<?= esc($depto['nombre_departamento']); ?>"
-                                        title="Eliminar">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+    <!-- 🪪 Botón créditos -->
+    <div class="text-center mb-4">
+        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalCreditos">
+            <i class="bi bi-people-fill"></i> Ver Créditos del Equipo
+        </button>
+    </div>
+
+    <!-- Alertas -->
+    <?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php elseif (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+
+    <!-- Barra de búsqueda -->
+    <form class="d-flex mb-3" method="get" action="<?= base_url('/departamentos/buscar'); ?>">
+        <input type="text" name="q" class="form-control me-2" placeholder="Buscar por código o descripción...">
+        <button class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+        <a href="<?= base_url('/departamentos'); ?>" class="btn btn-secondary ms-2"><i
+                class="bi bi-arrow-clockwise"></i> Limpiar</a>
+    </form>
+
+    <!-- Botón nuevo -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalDepartamento">
+        <i class="bi bi-plus-circle"></i> Nuevo Departamento
+    </button>
+
+    <!-- Tabla -->
+    <table id="tablaDepartamentos" class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Distancia (km)</th>
+                <th>Alojamiento (Q)</th>
+                <th>Combustible (Q)</th>
+                <th>Alimentación (Q)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($departamentos as $d): ?>
+            <tr class="text-center">
+                <td><?= esc($d['depto']) ?></td>
+                <td><?= esc($d['descripcion']) ?></td>
+                <td><?= esc($d['distancia']) ?></td>
+                <td><?= esc($d['alojamiento']) ?></td>
+                <td><?= esc($d['combustible']) ?></td>
+                <td><?= esc($d['alimentacion']) ?></td>
+                <td>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDepartamento"
+                        data-id="<?= esc($d['depto']) ?>" data-descripcion="<?= esc($d['descripcion']) ?>"
+                        data-distancia="<?= esc($d['distancia']) ?>" data-alojamiento="<?= esc($d['alojamiento']) ?>"
+                        data-combustible="<?= esc($d['combustible']) ?>"
+                        data-alimentacion="<?= esc($d['alimentacion']) ?>">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <a href="<?= base_url('/departamentos/delete/' . $d['depto']); ?>" class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Seguro que desea eliminar este departamento?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<!-- Modal CRUD -->
+<div class="modal fade" id="modalDepartamento" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formDepartamento">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title"><i class="bi bi-building"></i> Departamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Código</label>
+                        <input type="text" class="form-control" name="depto" id="depto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" name="descripcion" id="descripcion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Distancia (km)</label>
+                        <input type="number" step="0.01" class="form-control" name="distancia" id="distancia" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Alojamiento (Q)</label>
+                        <input type="number" step="0.01" class="form-control" name="alojamiento" id="alojamiento"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Alimentación (Q)</label>
+                        <input type="number" step="0.01" class="form-control" name="alimentacion" id="alimentacion"
+                            required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </form>
         </div>
-        
     </div>
 </div>
+<!-- 🪪 Modal de Créditos -->
+<div class="modal fade" id="modalCreditos" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="bi bi-person-lines-fill"></i> Créditos del Proyecto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-<!-- SCRIPTS PARA SWEETALERT DE CONFIRMACIÓN DE ELIMINACIÓN -->
+            <div class="modal-body">
+                <p class="fw-bold text-center mb-3">Sistema Web de Visitas Médicas - Módulo de Departamentos</p>
+
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>Carnet</th>
+                            <th>Nombre</th>
+                            <th>Procesos trabajados</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+                            <td>202108186</td>
+                            <td>Carmen alicia Zet Siney</td>
+                            <td class="text-start">
+                                <ul class="mb-0">
+                                    <li>Desarrollo del CRUD de Departamentos (buscar, guardar, editar, eliminar)</li>
+                                    <li>Diseño e integración con Bootstrap 5 y DataTables</li>
+                                    <li>Cálculo automático de gastos de combustible</li>
+                                    <li>Implementación de modales y alertas dinámicas</li>
+                                </ul>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Script -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+  const modal = document.getElementById('modalDepartamento');
+  modal.addEventListener('show.bs.modal', function(event) {
+    const button = event.relatedTarget;
+    const id = button.getAttribute('data-id');
+    const form = document.getElementById('formDepartamento');
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const id = this.getAttribute('data-id');
-                const nombre = this.getAttribute('data-nombre');
-                const deleteUrl = '<?= base_url('departamento/delete'); ?>/' + id;
+    if (id) {
+        form.action = '<?= base_url('/departamentos/update/'); ?>' + id;
+        document.getElementById('depto').value = button.getAttribute('data-id');
+        document.getElementById('descripcion').value = button.getAttribute('data-descripcion');
+        document.getElementById('distancia').value = button.getAttribute('data-distancia');
+        document.getElementById('alojamiento').value = button.getAttribute('data-alojamiento');
+        document.getElementById('alimentacion').value = button.getAttribute('data-alimentacion');
+        document.getElementById('depto').readOnly = true;
+    } else {
+        form.action = '<?= base_url('/departamentos/store'); ?>';
+        form.reset();
+        document.getElementById('depto').readOnly = false;
+    }
+  });
 
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: `Vas a eliminar el departamento **${nombre}**. ¡Esta acción es irreversible!`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, ¡Eliminar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Si confirma, redirige al método delete del controlador
-                        window.location.href = deleteUrl;
-                    }
-                });
-            });
-        });
-    });
+  // DataTable
+ new DataTable('#tablaDepartamentos');
 </script>
-
-<?= $this->include('layouts/footer'); ?>
+<?= view('templates/footer') ?>

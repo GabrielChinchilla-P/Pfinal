@@ -2,35 +2,11 @@
 
 use CodeIgniter\Model;
 
-class DepartamentoModel extends Model
+class DepartamentosModel extends Model
 {
-    protected $table      = 'departamentos';
-    protected $primaryKey = 'id_departamento';
-
-    protected $useAutoIncrement = true;
-
-    protected $returnType     = 'array';
-    protected $useSoftDeletes = false;
-
-    // Campos permitidos para inserción y actualización
+    protected $table = 'departamentos';
+    protected $primaryKey = 'depto';
     protected $allowedFields = [
-        'nombre_departamento', 
-        'distancia_km'
+        'depto', 'descripcion', 'distancia', 'alojamiento', 'combustible', 'alimentacion'
     ];
-
-    // Fechas
-    protected $useTimestamps = false; // Ajustar si usas campos created_at/updated_at
-
-    // Validaciones
-    protected $validationRules    = [];
-    protected $validationMessages = [];
-    protected $skipValidation     = false;
-
-    // Función para búsqueda
-    public function buscar($searchQuery)
-    {
-        return $this->like('nombre_departamento', $searchQuery)
-                    ->orLike('distancia_km', $searchQuery)
-                    ->findAll();
-    }
 }
