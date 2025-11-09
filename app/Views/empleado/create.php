@@ -8,7 +8,7 @@
 
         <!-- Manejo de Errores de Validación -->
         <?php if ($validation->getErrors()): ?>
-            <div class="alert alert-danger" role="alert"> alerta
+            <div class="alert alert-danger" role="alert"> alerta2 porque si
                 <h4 class="alert-heading">¡Error de Validación!</h4>
                 <ul>
                     <?php foreach ($validation->getErrors() as $error): ?>
