@@ -67,3 +67,43 @@
         </tbody>
     </table>
 </div>
+
+<!-- Botón regresar al menú -->
+<div class="text-center mb-3">
+    <a href="<?= base_url('/menu'); ?>" class="btn btn-warning">
+        <i class="bi bi-arrow-left-circle"></i> Regresar al Menú Principal
+    </a>
+</div>
+
+<!-- 🟩 Modal de Crear / Editar -->
+<div class="modal fade" id="modalBonificacion" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" id="formBonificacion">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title"><i class="bi bi-cash-coin"></i> Registrar Bonificación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label>ID Visitador</label>
+                <input type="text" class="form-control" name="id_visitador" id="id_visitador" required>
+            </div>
+            <div class="mb-3">
+                <label>Nombre Visitador</label>
+                <input type="text" class="form-control" name="nombre_visitador" id="nombre_visitador" required>
+            </div>
+            <div class="mb-3">
+                <label>Ventas Totales (Q)</label>
+                <input type="number" step="0.01" class="form-control" name="ventas_totales" id="ventas_totales" required>
+            </div>
+            <p class="text-muted"><small>La bonificación se calculará automáticamente según el total de ventas.</small></p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
