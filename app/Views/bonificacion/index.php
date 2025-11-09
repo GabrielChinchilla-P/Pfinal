@@ -24,6 +24,11 @@
         <a href="<?= base_url('/bonificacion'); ?>" class="btn btn-secondary ms-2"><i class="bi bi-arrow-clockwise"></i> Limpiar</a>
     </form>
 
+    <!-- 🟢 Botón nuevo -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalBonificacion">
+        <i class="bi bi-plus-circle"></i> Nueva Bonificación
+    </button>
+
 
 
 
