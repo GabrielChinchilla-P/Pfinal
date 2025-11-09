@@ -15,6 +15,10 @@
         <a href="<?= base_url('/empleados'); ?>" class="btn btn-secondary ms-2">Limpiar</a>
     </form>
 
+    <!-- Botón nuevo -->
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalEmpleado">
+        <i class="bi bi-plus-circle"></i> Nuevo Empleado
+    </button>
 
 
 
