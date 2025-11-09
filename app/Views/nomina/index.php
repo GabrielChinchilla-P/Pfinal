@@ -4,7 +4,7 @@
     <h3 class="text-primary">
         <i class="fa-solid fa-money-bill-wave"></i> Nómina de Empleados
     </h3>
-    <a href="<?= base_url('nomina/crear'); ?>" class="btn btn-success">
+    <a href="<?= base_url('nomina/create'); ?>" class="btn btn-success">
         <i class="fa-solid fa-plus-circle"></i> Nueva Nómina
     </a>
 </div>
