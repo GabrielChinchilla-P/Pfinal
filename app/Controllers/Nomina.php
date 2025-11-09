@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
@@ -6,7 +6,7 @@ use CodeIgniter\Controller;
 use App\Models\NominaModel;
 use App\Models\UserModel;
 
-class Nomina extends Controller 
+class Nomina extends Controller
 {
     protected $nominaModel;
     protected $userModel;
@@ -15,67 +15,70 @@ class Nomina extends Controller
     public function __construct()
     {
         $this->nominaModel = new NominaModel();
-        $this->userModel = new UserModel();
-        $this->session = session();
+        $this->userModel   = new UserModel();
+        $this->session     = session();
     }
 
     /**
-     * Muestra la lista de registros de nómina con capacidad de búsqueda. (R del CRUD)
+     * 📋 Muestra la lista de registros de nómina con búsqueda
      */
     public function index()
     {
-        // 1. AUTORIZACIÓN: Solo permitir acceso a 'admin'
+        // 1. Verificación de acceso
         if ($this->session->get('rol') !== 'admin') {
             $this->session->setFlashdata('msg', 'Acceso denegado. No tienes permisos para ver la Nómina.');
-            return redirect()->to(base_url('menu')); 
+            return redirect()->to(base_url('menu'));
         }
-        
-        // 2. LÓGICA DE BÚSQUEDA
+
+        // 2. Obtener parámetro de búsqueda (si existe)
         $searchQuery = $this->request->getGet('q');
-        
-        // 💡 CORRECCIÓN CRÍTICA: Se listan explícitamente todos los campos de 'nomina' 
-        // para garantizar que 'IGSS' y 'sueldo_liquido' sean incluidos en el resultado.
-        $builder = $this->nominaModel->select('
-            nomina.id_nomina, 
-            nomina.mes, 
-            nomina.sueldo_base, 
-            nomina.bonificacion, 
-            nomina.IGSS,         /* <-- ¡Campo IGSS asegurado! */
-            nomina.descuentos, 
-            nomina.sueldo_liquido,
-            
-            empleados.nombre as nombre_empleado, 
-            empleados.apellido as apellido_empleado, /* <-- Añadido para mostrar el nombre completo */
-            usuarios.usuario as nombre_usuario
-        ')
-        ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left') 
-        ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left'); 
 
-        if ($searchQuery) {
-            // Aplicar filtros de búsqueda
-            $builder->orLike('nomina.mes', $searchQuery)
-                    ->orLike('empleados.nombre', $searchQuery) 
-                    ->orLike('empleados.apellido', $searchQuery) 
-                    ->orLike('usuarios.usuario', $searchQuery);
+        // 3. Construir la consulta principal
+        $builder = $this->nominaModel
+            ->select('
+                nomina.id_nomina,
+                nomina.mes,
+                nomina.sueldo_base,
+                nomina.bonificacion,
+                nomina.IGSS,
+                nomina.descuentos,
+                nomina.sueldo_liquido,
+                empleados.nombre AS nombre_empleado,
+                empleados.apellido AS apellido_empleado,
+                usuarios.usuario AS nombre_usuario
+            ')
+            ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left')
+            ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left');
+
+        // 4. Aplicar filtro de búsqueda si se ingresó texto
+        if (!empty($searchQuery)) {
+            $builder->groupStart()
+                ->like('nomina.mes', $searchQuery)
+                ->orLike('empleados.nombre', $searchQuery)
+                ->orLike('empleados.apellido', $searchQuery)
+                ->orLike('usuarios.usuario', $searchQuery)
+                ->groupEnd();
         }
 
+        // 5. Obtener resultados ordenados
         $nominas = $builder->orderBy('nomina.mes', 'DESC')
-                           ->findAll();
+                           ->get()
+                           ->getResult();
 
-
+        // 6. Enviar datos a la vista
         $data = [
             'title'       => 'Gestión de Nómina',
             'usuario'     => $this->session->get('usuario'),
             'rol'         => $this->session->get('rol'),
-            'nominas'     => $nominas, 
-            'searchQuery' => $searchQuery, // Pasamos el query de vuelta a la vista
+            'nominas'     => $nominas,
+            'searchQuery' => $searchQuery,
         ];
 
         return view('nomina/index', $data);
     }
 
     /**
-     * Muestra el formulario para crear un nuevo registro de nómina. (C del CRUD)
+     * 🧾 Muestra el formulario para crear una nueva nómina
      */
     public function create()
     {
@@ -84,7 +87,6 @@ class Nomina extends Controller
             return redirect()->to(base_url('menu'));
         }
 
-        // Obtener la lista de usuarios (empleados) para el desplegable
         $empleados = $this->userModel->select('id_usuario, nombre, usuario')->findAll();
 
         $data = [
@@ -95,10 +97,9 @@ class Nomina extends Controller
 
         return view('nomina/create', $data);
     }
-    
+
     /**
-     * Guarda el nuevo registro de nómina. (C del CRUD)
-     * 💡 MÉTODO CORREGIDO CON BLOQUE DE DIAGNÓSTICO
+     * 💾 Guarda un nuevo registro de nómina
      */
     public function store()
     {
@@ -107,19 +108,17 @@ class Nomina extends Controller
             return redirect()->to(base_url('menu'));
         }
 
-        // 1. Obtener y calcular datos
+        // Calcular valores
         $id_empleado  = $this->request->getPost('id_empleado');
         $mes          = $this->request->getPost('mes');
         $sueldo_base  = (float) $this->request->getPost('sueldo_base');
         $bonificacion = (float) $this->request->getPost('bonificacion') ?? 0;
         $descuentos   = (float) $this->request->getPost('descuentos') ?? 0;
 
-        $tasa_igss = 0.0483; 
+        $tasa_igss      = 0.0483;
         $igss_calculado = round($sueldo_base * $tasa_igss, 2);
-
         $sueldo_liquido = $sueldo_base + $bonificacion - $igss_calculado - $descuentos;
 
-        // 2. Preparar datos para el Modelo
         $data = [
             'id_empleado'    => $id_empleado,
             'mes'            => $mes,
@@ -130,36 +129,15 @@ class Nomina extends Controller
             'sueldo_liquido' => $sueldo_liquido,
         ];
 
-        // =========================================================
-        // 🚨 BLOQUE DE DIAGNÓSTICO (¡TEMPORAL!) 🚨
-        // =========================================================
-        if (! $this->nominaModel->validate($data)) {
-            // Error de validación
-            echo "<h1>❌ ERROR DE VALIDACIÓN</h1>";
-            echo "<p>La nómina no se pudo guardar debido a la validación. Revisa el listado de errores:</p>";
-            dd($this->nominaModel->errors()); 
-        }
+        $this->nominaModel->save($data);
 
-        // Intentar Guardar en la base de datos
-        $guardado = $this->nominaModel->save($data);
-
-        if ($guardado === false) {
-            // Error de DB después de la validación
-            echo "<h1>❌ ERROR DE BASE DE DATOS AL GUARDAR</h1>";
-            echo "<p>La validación pasó, pero la base de datos rechazó el registro. Revisa el error de la DB:</p>";
-            dd($this->nominaModel->db->error());
-        }
-        // =========================================================
-        // FIN DEL BLOQUE DE DIAGNÓSTICO
-        // =========================================================
-
-        // Si llega aquí, significa que el guardado fue exitoso
         $this->session->setFlashdata('success', 'Nómina calculada y registrada correctamente.');
         return redirect()->to(base_url('nomina'));
     }
 
-    // ... (El resto de tus métodos: edit, update, delete)
-    
+    /**
+     * ✏️ Muestra el formulario para editar una nómina existente
+     */
     public function edit($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
@@ -184,7 +162,10 @@ class Nomina extends Controller
 
         return view('nomina/edit', $data);
     }
-    
+
+    /**
+     * 🔁 Actualiza un registro de nómina existente
+     */
     public function update($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
@@ -192,20 +173,18 @@ class Nomina extends Controller
             return redirect()->to(base_url('nomina'));
         }
 
-        // 1. Obtener datos y realizar el cálculo
         $id_empleado  = $this->request->getPost('id_empleado');
         $mes          = $this->request->getPost('mes');
         $sueldo_base  = (float) $this->request->getPost('sueldo_base');
         $bonificacion = (float) $this->request->getPost('bonificacion') ?? 0;
         $descuentos   = (float) $this->request->getPost('descuentos') ?? 0;
 
-        $tasa_igss = 0.0483; 
+        $tasa_igss      = 0.0483;
         $igss_calculado = round($sueldo_base * $tasa_igss, 2);
         $sueldo_liquido = $sueldo_base + $bonificacion - $igss_calculado - $descuentos;
 
-        // 2. Preparar datos para el Modelo
         $data = [
-            'id_nomina'      => $id_nomina, // ¡Importante para la actualización!
+            'id_nomina'      => $id_nomina,
             'id_empleado'    => $id_empleado,
             'mes'            => $mes,
             'sueldo_base'    => $sueldo_base,
@@ -214,19 +193,16 @@ class Nomina extends Controller
             'descuentos'     => $descuentos,
             'sueldo_liquido' => $sueldo_liquido,
         ];
-        
-        if (! $this->nominaModel->validate($data)) {
-            $this->session->setFlashdata('errors', $this->nominaModel->errors());
-            return redirect()->back()->withInput();
-        }
 
-        // 4. Actualizar en la base de datos
         $this->nominaModel->save($data);
 
         $this->session->setFlashdata('success', 'Registro de nómina actualizado correctamente.');
         return redirect()->to(base_url('nomina'));
     }
-    
+
+    /**
+     * ❌ Elimina un registro de nómina
+     */
     public function delete($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
