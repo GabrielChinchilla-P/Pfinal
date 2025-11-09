@@ -1,3 +1,20 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Gestión de Empleados</h2>
+
+    <!-- Alertas -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php elseif (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+
+
+
+
+
+
+
+
 <?= $this->include('layouts/header'); ?>
 
 <div class="card shadow mb-4">
