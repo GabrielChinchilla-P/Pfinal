@@ -57,7 +57,19 @@ class Departamentos extends Controller
         }
     }
 
+// ✏️ Editar
+    public function update($id)
+    {
+        $data = $this->request->getPost([
+            'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        ]);
 
+        if ($this->empleadosModel->update($id, $data)) {
+            return redirect()->to('/empleados')->with('success', 'Empleado actualizado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'Error al actualizar el empleado.');
+        }
+    }
 
     {
         $this->departamentosModel = new DepartamentosModel();
