@@ -5,7 +5,6 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\NominaModel;
 use App\Models\UserModel;
-// No es necesario importar \Config\Services::validation() si usamos $this->nominaModel->validate()
 
 class Nomina extends Controller 
 {
@@ -32,21 +31,27 @@ class Nomina extends Controller
         }
         
         // 2. LÓGICA DE BÚSQUEDA
-        $searchQuery = $this->request->getGet('q'); // Obtener el parámetro de búsqueda 'q'
+        $searchQuery = $this->request->getGet('q');
         
+        // 💡 CORRECCIÓN DE JOIN en index(): Debe hacer JOIN a empleados y luego a usuarios.
+        $builder = $this->nominaModel->select('
+            nomina.*, 
+            empleados.nombre as nombre_empleado, 
+            usuarios.usuario as nombre_usuario
+        ')
+        ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left') // Asumo que Nomina apunta a Empleados
+        ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left'); // Asumo que Empleados apunta a Usuarios
+
         if ($searchQuery) {
-            // Si hay término de búsqueda, filtramos. 
-            $nominas = $this->nominaModel->select('nomina.*, usuarios.nombre as nombre_empleado, usuarios.usuario as nombre_usuario')
-                                         ->join('usuarios', 'usuarios.id_usuario = nomina.id_empleado')
-                                         ->orLike('nomina.mes', $searchQuery)
-                                         ->orLike('usuarios.nombre', $searchQuery)
-                                         ->orLike('usuarios.usuario', $searchQuery)
-                                         ->orderBy('nomina.mes', 'DESC')
-                                         ->findAll();
-        } else {
-            // Si no hay búsqueda, usamos la función JOIN estándar
-            $nominas = $this->nominaModel->getNominaConEmpleado();
+            // Aplicar filtros de búsqueda
+            $builder->orLike('nomina.mes', $searchQuery)
+                    ->orLike('empleados.nombre', $searchQuery) // Cambio a empleados.nombre
+                    ->orLike('usuarios.usuario', $searchQuery);
         }
+
+        $nominas = $builder->orderBy('nomina.mes', 'DESC')
+                           ->findAll();
+
 
         $data = [
             'title'       => 'Gestión de Nómina',
@@ -70,6 +75,8 @@ class Nomina extends Controller
         }
 
         // Obtener la lista de usuarios (empleados) para el desplegable
+        // Se sugiere que esta consulta se haga sobre la tabla 'empleados' si es posible,
+        // o usar 'id_usuario' si es el ID que se guarda en la nómina. Usaremos UserModel por consistencia.
         $empleados = $this->userModel->select('id_usuario, nombre, usuario')->findAll();
 
         $data = [
@@ -83,6 +90,7 @@ class Nomina extends Controller
     
     /**
      * Guarda el nuevo registro de nómina. (C del CRUD)
+     * 💡 MÉTODO CORREGIDO CON BLOQUE DE DIAGNÓSTICO
      */
     public function store()
     {
@@ -91,23 +99,21 @@ class Nomina extends Controller
             return redirect()->to(base_url('menu'));
         }
 
-        // 1. Obtener datos
+        // 1. Obtener y calcular datos
         $id_empleado  = $this->request->getPost('id_empleado');
         $mes          = $this->request->getPost('mes');
         $sueldo_base  = (float) $this->request->getPost('sueldo_base');
         $bonificacion = (float) $this->request->getPost('bonificacion') ?? 0;
         $descuentos   = (float) $this->request->getPost('descuentos') ?? 0;
 
-        // CÁLCULO ESPECÍFICO DE IGSS 
         $tasa_igss = 0.0483; 
         $igss_calculado = round($sueldo_base * $tasa_igss, 2);
 
-        // CÁLCULO FINAL
         $sueldo_liquido = $sueldo_base + $bonificacion - $igss_calculado - $descuentos;
 
         // 2. Preparar datos para el Modelo
         $data = [
-            'id_empleado'    => $id_empleado, // <--- Este es el campo clave
+            'id_empleado'    => $id_empleado,
             'mes'            => $mes,
             'sueldo_base'    => $sueldo_base,
             'bonificacion'   => $bonificacion,
@@ -117,28 +123,37 @@ class Nomina extends Controller
         ];
 
         // =========================================================
-        // 💡 CORRECCIÓN CLAVE: Usar la validación del modelo
-        // que incluye 'is_not_unique[empleados.id_empleado]'
+        // 🚨 BLOQUE DE DIAGNÓSTICO (¡TEMPORAL!) 🚨
         // =========================================================
         if (! $this->nominaModel->validate($data)) {
-            // Si la validación falla (incluyendo el ID de empleado inexistente)
-            $this->session->setFlashdata('errors', $this->nominaModel->errors());
-            // Si usas el validador del controlador, puedes reemplazar la línea de arriba con:
-            // $this->session->setFlashdata('errors', \Config\Services::validation()->getErrors());
-            return redirect()->back()->withInput();
+            // Error de validación
+            echo "<h1>❌ ERROR DE VALIDACIÓN</h1>";
+            echo "<p>La nómina no se pudo guardar debido a la validación. Revisa el listado de errores:</p>";
+            dd($this->nominaModel->errors()); 
         }
 
-        // 4. Guardar en la base de datos (Línea 133 original)
-        $this->nominaModel->save($data);
+        // Intentar Guardar en la base de datos
+        $guardado = $this->nominaModel->save($data);
 
+        if ($guardado === false) {
+            // Error de DB después de la validación
+            echo "<h1>❌ ERROR DE BASE DE DATOS AL GUARDAR</h1>";
+            echo "<p>La validación pasó, pero la base de datos rechazó el registro. Revisa el error de la DB:</p>";
+            dd($this->nominaModel->db->error());
+        }
+        // =========================================================
+        // FIN DEL BLOQUE DE DIAGNÓSTICO
+        // =========================================================
+
+        // Si llega aquí, significa que el guardado fue exitoso
         $this->session->setFlashdata('success', 'Nómina calculada y registrada correctamente.');
         return redirect()->to(base_url('nomina'));
     }
 
-    /**
-     * Muestra el formulario para editar un registro existente. (U del CRUD)
-     * @param int $id_nomina
-     */
+    // ... (El resto de tus métodos: edit, update, delete)
+    // El método update que me enviaste tenía el bloque de diagnóstico, 
+    // lo dejo con tu lógica original limpia para que no interfiera en la edición.
+
     public function edit($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
@@ -164,10 +179,6 @@ class Nomina extends Controller
         return view('nomina/edit', $data);
     }
     
-    /**
-     * Procesa la actualización de un registro de nómina. (U del CRUD)
-     * @param int $id_nomina
-     */
     public function update($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
@@ -186,51 +197,19 @@ class Nomina extends Controller
         $igss_calculado = round($sueldo_base * $tasa_igss, 2);
         $sueldo_liquido = $sueldo_base + $bonificacion - $igss_calculado - $descuentos;
 
-       // 2. Preparar datos para el Modelo
-$data = [
-    'id_empleado'    => $this->request->getPost('id_empleado'),
-    'mes'            => $this->request->getPost('mes'),
-    'sueldo_base'    => $sueldo_base,
-    'bonificacion'   => $bonificacion,
-    'IGSS'           => $igss_calculado,
-    'descuentos'     => $descuentos,
-    'sueldo_liquido' => $sueldo_liquido,
-];
-// =========================================================
-// 💡 DIAGNÓSTICO: DETENER Y MOSTRAR ERRORES
-// =========================================================
-
-// 1. Intentar validar los datos
-if (!$this->nominaModel->validate($data)) {
-    echo "<h1>❌ ERROR DE VALIDACIÓN</h1>";
-    echo "<p>La nómina no se pudo guardar debido a:</p>";
-    // Muestra todos los errores del modelo (incluyendo el error de clave foránea)
-    dd($this->nominaModel->errors()); 
-} 
-// 2. Si la validación pasa, intentar GUARDAR y verificar el resultado
-else {
-    $guardado = $this->nominaModel->save($data);
-
-    if ($guardado === false) {
-        // Esto solo ocurre si hay un error de DB después de la validación
-        echo "<h1>❌ ERROR DE BASE DE DATOS DESPUÉS DE LA VALIDACIÓN</h1>";
-        // Muestra el último error de la base de datos
-        dd($this->nominaModel->db->error()); 
-    } else {
-        // Éxito:
-        $this->session->setFlashdata('success', 'Nómina calculada y registrada correctamente.');
-        return redirect()->to(base_url('nomina'));
-    }
-}
-
-// Finaliza el código aquí para evitar la redirección en caso de error
-die();
+        // 2. Preparar datos para el Modelo
+        $data = [
+            'id_nomina'      => $id_nomina, // ¡Importante para la actualización!
+            'id_empleado'    => $id_empleado,
+            'mes'            => $mes,
+            'sueldo_base'    => $sueldo_base,
+            'bonificacion'   => $bonificacion,
+            'IGSS'           => $igss_calculado,
+            'descuentos'     => $descuentos,
+            'sueldo_liquido' => $sueldo_liquido,
+        ];
         
-        // =========================================================
-        // 💡 CORRECCIÓN CLAVE: Usar la validación del modelo
-        // =========================================================
         if (! $this->nominaModel->validate($data)) {
-            // Si la validación falla (incluyendo el ID de empleado inexistente)
             $this->session->setFlashdata('errors', $this->nominaModel->errors());
             return redirect()->back()->withInput();
         }
@@ -242,10 +221,6 @@ die();
         return redirect()->to(base_url('nomina'));
     }
     
-    /**
-     * Elimina un registro de nómina. (D del CRUD)
-     * @param int $id_nomina
-     */
     public function delete($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
