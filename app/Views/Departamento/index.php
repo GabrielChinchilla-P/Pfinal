@@ -81,3 +81,42 @@
         </tbody>
     </table>
 </div>
+<!-- Modal CRUD -->
+<div class="modal fade" id="modalDepartamento" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" id="formDepartamento">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title"><i class="bi bi-building"></i> Departamento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label>Código</label>
+                <input type="text" class="form-control" name="depto" id="depto" required>
+            </div>
+            <div class="mb-3">
+                <label>Descripción</label>
+                <input type="text" class="form-control" name="descripcion" id="descripcion" required>
+            </div>
+            <div class="mb-3">
+                <label>Distancia (km)</label>
+                <input type="number" step="0.01" class="form-control" name="distancia" id="distancia" required>
+            </div>
+            <div class="mb-3">
+                <label>Alojamiento (Q)</label>
+                <input type="number" step="0.01" class="form-control" name="alojamiento" id="alojamiento" required>
+            </div>
+            <div class="mb-3">
+                <label>Alimentación (Q)</label>
+                <input type="number" step="0.01" class="form-control" name="alimentacion" id="alimentacion" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
