@@ -218,4 +218,5 @@ class Nomina extends Controller
 
         return redirect()->to(base_url('nomina'));
     }
+    
 }
