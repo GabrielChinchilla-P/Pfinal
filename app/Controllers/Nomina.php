@@ -33,19 +33,29 @@ class Nomina extends Controller
         // 2. LÓGICA DE BÚSQUEDA
         $searchQuery = $this->request->getGet('q');
         
-        // 💡 CORRECCIÓN DE JOIN en index(): Debe hacer JOIN a empleados y luego a usuarios.
+        // 💡 CORRECCIÓN CRÍTICA: Se listan explícitamente todos los campos de 'nomina' 
+        // para garantizar que 'IGSS' y 'sueldo_liquido' sean incluidos en el resultado.
         $builder = $this->nominaModel->select('
-            nomina.*, 
+            nomina.id_nomina, 
+            nomina.mes, 
+            nomina.sueldo_base, 
+            nomina.bonificacion, 
+            nomina.IGSS,         /* <-- ¡Campo IGSS asegurado! */
+            nomina.descuentos, 
+            nomina.sueldo_liquido,
+            
             empleados.nombre as nombre_empleado, 
+            empleados.apellido as apellido_empleado, /* <-- Añadido para mostrar el nombre completo */
             usuarios.usuario as nombre_usuario
         ')
-        ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left') // Asumo que Nomina apunta a Empleados
-        ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left'); // Asumo que Empleados apunta a Usuarios
+        ->join('empleados', 'empleados.id_empleado = nomina.id_empleado', 'left') 
+        ->join('usuarios', 'usuarios.id_usuario = empleados.id_usuario', 'left'); 
 
         if ($searchQuery) {
             // Aplicar filtros de búsqueda
             $builder->orLike('nomina.mes', $searchQuery)
-                    ->orLike('empleados.nombre', $searchQuery) // Cambio a empleados.nombre
+                    ->orLike('empleados.nombre', $searchQuery) 
+                    ->orLike('empleados.apellido', $searchQuery) 
                     ->orLike('usuarios.usuario', $searchQuery);
         }
 
@@ -75,8 +85,6 @@ class Nomina extends Controller
         }
 
         // Obtener la lista de usuarios (empleados) para el desplegable
-        // Se sugiere que esta consulta se haga sobre la tabla 'empleados' si es posible,
-        // o usar 'id_usuario' si es el ID que se guarda en la nómina. Usaremos UserModel por consistencia.
         $empleados = $this->userModel->select('id_usuario, nombre, usuario')->findAll();
 
         $data = [
@@ -151,9 +159,7 @@ class Nomina extends Controller
     }
 
     // ... (El resto de tus métodos: edit, update, delete)
-    // El método update que me enviaste tenía el bloque de diagnóstico, 
-    // lo dejo con tu lógica original limpia para que no interfiera en la edición.
-
+    
     public function edit($id_nomina = null)
     {
         if ($this->session->get('rol') !== 'admin' || $id_nomina === null) {
