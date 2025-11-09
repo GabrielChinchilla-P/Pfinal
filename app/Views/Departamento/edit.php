@@ -34,9 +34,9 @@
 
             <!-- Botones de Acción -->
             <div class="d-flex justify-content-end mt-4">
-                <a href="<?= base_url('departamenta'); ?>" class="btn btn-secondary me-2">Cancelar</a>
+                <a href="<?= base_url('departamento'); ?>" class="btn btn-secondary me-2">Cancelar</a>
                 <button type="submit" class="btn btn-warning">
-                    <i class="fa-solid fa-sync-alt"></i> Actualizar Departamento
+                    <i class="fa-solid fa-sync-alt"></i> Departamento
                 </button>
             </div>
 
