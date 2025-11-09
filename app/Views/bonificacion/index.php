@@ -152,3 +152,29 @@
     </div>
   </div>
 </div>
+
+c<!-- 🔧 Script del modal CRUD -->
+<script>
+    const modal = document.getElementById('modalBonificacion');
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const form = document.getElementById('formBonificacion');
+
+        if (id) {
+            form.action = '<?= base_url('/bonificacion/update/'); ?>' + id;
+            document.getElementById('id_visitador').value = id;
+            document.getElementById('nombre_visitador').value = button.getAttribute('data-nombre');
+            document.getElementById('ventas_totales').value = button.getAttribute('data-ventas');
+            document.getElementById('id_visitador').readOnly = true;
+        } else {
+            form.action = '<?= base_url('/bonificacion/store'); ?>';
+            form.reset();
+            document.getElementById('id_visitador').readOnly = false;
+        }
+    });
+
+    new DataTable('#tablaBonificacion');
+</script>
+
+<?= view('templates/footer') ?>
