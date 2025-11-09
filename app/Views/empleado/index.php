@@ -63,6 +63,46 @@
     </table>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalEmpleado" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" id="formEmpleado">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title">Empleado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label>Código</label>
+                <input type="text" class="form-control" name="cod_empleado" id="cod_empleado" required>
+            </div>
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label>Apellido</label>
+                <input type="text" class="form-control" name="apellido" id="apellido" required>
+            </div>
+            <div class="mb-3">
+                <label>Departamento</label>
+                <input type="text" class="form-control" name="departamento" id="departamento" required>
+            </div>
+            <div class="mb-3">
+                <label>Fecha Ingreso</label>
+                <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 
