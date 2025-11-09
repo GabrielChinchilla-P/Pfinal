@@ -26,23 +26,23 @@ $routes->get('menu', 'MenuController::index', ['filter' => 'auth']);
 $routes->get('nomina', 'Nomina::index', ['filter' => 'auth']);
 
 $routes->group('/', ['filter' => 'auth'], static function ($routes) {
-    
-    // R - Listar Nómina (Nomina::index)
+
+    // R - Listar Nómina
     $routes->get('nomina', 'Nomina::index');
     
-    // C - Crear Nueva Nómina (Formulario) (Nomina::create)
+    // C - Crear Nueva Nómina (Formulario)
     $routes->get('nomina/create', 'Nomina::create');
     
-    // C - Guardar Nueva Nómina (Proceso POST) (Nomina::store)
+    // C - Guardar Nueva Nómina (Proceso POST)
     $routes->post('nomina/store', 'Nomina::store');
     
-    // U - Editar Nómina (Formulario pre-llenado) (Nomina::edit)
+    // U - Editar Nómina (Formulario pre-llenado)
     $routes->get('nomina/edit/(:num)', 'Nomina::edit/$1');
     
-    // U - Actualizar Nómina (Proceso POST) (Nomina::update)
+    // U - Actualizar Nómina (Proceso POST)
     $routes->post('nomina/update/(:num)', 'Nomina::update/$1');
     
-    // D - Eliminar Nómina (Nomina::delete)
+    // D - Eliminar Nómina
     $routes->get('nomina/delete/(:num)', 'Nomina::delete/$1');
 });
 
