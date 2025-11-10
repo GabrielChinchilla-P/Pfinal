@@ -141,7 +141,7 @@
                     <tbody class="text-center">
                         <tr>
                             <td>202108186</td>
-                            <td>Carmen alicia Zet Siney</td>
+                            <td>Carmen Zet Siney</td>
                             <td class="text-start">
                                 <ul class="mb-0">
                                     <li>Desarrollo del CRUD de Departamentos (buscar, guardar, editar, eliminar)</li>

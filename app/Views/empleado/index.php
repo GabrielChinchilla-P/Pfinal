@@ -114,7 +114,7 @@
                 <tbody class="text-center">
                     <tr>
                         <td>202112444</td>
-                        <td>Katherine Nicole Villavicencio Cabrera</td>
+                        <td>Katherine Villavicencio</td>
                         <td class="text-start">
                             <ul class="mb-0">
                                 <li>Desarrollo del CRUD de Empleados (buscar, guardar, editar, eliminar)</li>

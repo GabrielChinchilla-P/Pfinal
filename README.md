@@ -1,60 +1,84 @@
-# CodeIgniter 4 Framework
+PLANTEAMIENTO DEL PROBLEMA
 
-## What is CodeIgniter?
+PROBLEMA
+Se desarrolla una Aplicación Web para la Gestión de Visitas Médicas y Control de Nómina en una Empresa Farmacéutica 
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+DESCRIPCIÓN DEL PROBLEMA A RESOLVER
+Una empresa farmacéutica necesita automatizar la gestión de actividades del personal que realiza visitas médicas en distintos departamentos del país. Actualmente, los procesos de registro de empleados, control de gastos, cálculo de bonificaciones y generación de nómina se llevan a cabo de manera manual, lo que genera errores, retrasos y pérdida de información.
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+La empresa solicita el desarrollo de una aplicación web en PHP con MySQL que permita optimizar el control de visitas médicas, gastos de operación y cálculo de la nómina mensual, integrando todas las funciones en un solo sistema confiable y accesible.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Requisitos
+1. Gestión de Usuarios:
+Inicio de sesión con autenticación de credenciales (tabla usuarios).
+Control de acceso según el perfil del usuario.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+2. Gestión de Empleados y Departamentos:
+Registro de empleados con datos personales y laborales.
+Registro de departamentos, incluyendo distancias recorridas.
+Cálculo automático de gastos de combustible (distancia × 30.54).
 
-## Important Change with index.php
+3. Gestión de Gastos:
+Registro de alimentación, alojamiento, combustible y otros gastos en cada visita.
+Generación de reportes detallados por empleado y por periodo (tabla informe gastos).
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+4. Bonificaciones por Ventas:
+Cálculo automático de bonificación según ventas alcanzadas:
+≥ Q40,000 → 15%
+≥ Q25,000 → 10%
+≤ Q25,000 → 5%
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+5. Cálculo de Nómina:
+IGSS = (Sueldo base + bonificación) × 0.0483
+Sueldo líquido = Sueldo base + bonificación − IGSS − otros descuentos
+Generación de reportes individuales y globales de nómina mensual.Requerimientos Técnicos
 
-**Please** read the user guide for a better explanation of how CI4 works!
+Frontend:
+Interfaz de usuario desarrollada en HTML, PHP y Bootstrap.
+Formularios web claros, modernos y funcionales.
+Compatibilidad con dispositivos móviles y de escritorio.
 
-## Repository Management
+Backend:
+Base de datos en MySQL (bd_visitasmedicas) con las tablas:
+usuarios
+empleados
+departamentos
+informe gastos
+bonificación
+nomina
+Conexión segura a la base de datos (archivo conexion.php).
+Lógica implementada en PHP 8+ ejecutándose en XAMPP.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Seguridad:
+Autenticación y autorización de usuarios.
+Validación de entradas en formularios para evitar inyecciones SQL.
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Proceso de Desarrollo
 
-## Contributing
+Análisis de Requisitos:
+Reunión con el personal administrativo para definir necesidades y flujos de trabajo.
 
-We welcome contributions from the community.
+Diseño del Sistema:
+Elaboración de diagramas de base de datos y diseño de interfaces web.
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+Desarrollo: Creación de los módulos principales:
+login.php
+menu.php
+departamentos.php
+bonificacion.php
+nomina.php
+informe_gastos.php
 
-## Server Requirements
+Pruebas:
+Validación de cálculos, formularios y seguridad.
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+Implementación: Despliegue en servidor local con XAMPP (/htdocs).
+Capacitación: Entrenamiento al personal de recursos humanos y supervisores.
+Mantenimiento: Corrección de errores y actualizaciones del sistema.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+Objetivos:
+Automatizar el control de visitas médicas realizadas por los empleados.
+Optimizar el cálculo de gastos, bonificaciones y nómina mensual.
+Reducir errores derivados de cálculos manuales y pérdida de registros.
+Ofrecer reportes confiables para la toma de decisiones gerenciales
+Proporcionar una plataforma unificada que centralice toda la información de empleados, departamentos y gastos
