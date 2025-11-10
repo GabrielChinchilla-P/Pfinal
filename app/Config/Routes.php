@@ -65,32 +65,10 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     // ---------------------------------
 
 $routes->get('informe_gastos', 'InformeGastos::index');
+$routes->post('informe_gastos/buscar', 'InformeGastos::buscar');
    
 
-    $routes->get('informegasto', 'InformeGasto::index', ['filter' => 'auth']);
-
-    $routes->group('/', ['filter' => 'auth'], static function ($routes) {
-    
-    // R - Listar Informes de Gasto (InformeGasto::index)
-    $routes->get('informegasto', 'InformeGasto::index');
-    
-    // C - Crear Nuevo Informe (Formulario)
-    $routes->get('informegasto/create', 'InformeGasto::create');
-    
-    // C - Guardar Nuevo Informe (Proceso POST)
-    $routes->post('informegasto/store', 'InformeGasto::store');
-    
-    // U - Editar Informe (Formulario pre-llenado)
-    $routes->get('informegasto/edit/(:num)', 'InformeGasto::edit/$1');
-    
-    // U - Actualizar Informe (Proceso POST)
-    $routes->post('informegasto/update/(:num)', 'InformeGasto::update/$1');
-    
-    // D - Eliminar Informe
-    $routes->get('informegasto/delete/(:num)', 'InformeGasto::delete/$1');
-
-});
-
+   
  // ---------------------------------
 
     // MÓDULO DE DEPARTAMENTO (NUEVO)
