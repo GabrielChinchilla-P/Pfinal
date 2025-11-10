@@ -1,160 +1,85 @@
 <?php namespace App\Controllers;
 
+use App\Models\DepartamentosModel;
 use CodeIgniter\Controller;
-use App\Models\DepartamentoModel;
 
-class Departamento extends Controller
+class Departamentos extends Controller
 {
-    protected $departamentoModel;
+    protected $departamentosModel;
 
     public function __construct()
-    {
-        // Cargar el modelo en el constructor
-        $this->departamentoModel = new DepartamentoModel();
-        // Cargar el helper de URL y Formulario para las vistas y el controlador
-        helper(['url', 'form']);
+        {
+        $this->empleadosModel = new EmpleadosModel();
     }
 
-    /**
-     * Muestra la lista de todos los departamentos y maneja la búsqueda.
-     */
+    // 📄 Listar
     public function index()
     {
-        $searchQuery = $this->request->getGet('q');
-        
-        if ($searchQuery) {
-            $departamentos = $this->departamentoModel->buscar($searchQuery);
+        $data['empleados'] = $this->empleadosModel->findAll();
+        echo view('templates/header');
+        echo view('empleados/index', $data);
+        echo view('templates/footer');
+    }
+
+    // 🔍 Buscar
+    public function buscar()
+    {
+        $busqueda = $this->request->getGet('q');
+        if ($busqueda) {
+            $data['empleados'] = $this->empleadosModel
+                ->like('cod_empleado', $busqueda)
+                ->orLike('nombre', $busqueda)
+                ->orLike('apellido', $busqueda)
+                ->orLike('departamento', $busqueda)
+                ->findAll();
         } else {
-            $departamentos = $this->departamentoModel->findAll();
+            $data['empleados'] = $this->empleadosModel->findAll();
         }
 
-        $data = [
-            'title'         => 'Gestión de Departamentos',
-            'departamentos' => $departamentos,
-            'searchQuery'   => $searchQuery,
-        ];
-
-        return view('departamento/index', $data);
+        echo view('templates/header');
+        echo view('empleados/index', $data);
+        echo view('templates/footer');
     }
 
-    /**
-     * Muestra el formulario para crear un nuevo departamento.
-     */
-    public function create()
-    {
-        $data = [
-            'title' => 'Crear Nuevo Departamento'
-        ];
-        return view('departamento/create', $data);
-    }
-
-    /**
-     * Procesa y guarda un nuevo registro de departamento.
-     */
+    // 🟢 Guardar
     public function store()
     {
-        // 1. Definir reglas de validación
-        $rules = [
-            'nombre_departamento' => 'required|min_length[3]|max_length[150]|is_unique[departamentos.nombre_departamento]',
-            'distancia_km'        => 'required|numeric|greater_than_equal_to[0]',
-        ];
+        $data = $this->request->getPost([
+            'cod_empleado', 'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        ]);
 
-        // 2. Ejecutar validación
-        if (!$this->validate($rules)) {
-            // Si la validación falla, regresa al formulario con los errores
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        $this->empleadosModel->insert($data);
+
+        if ($this->empleadosModel->db->affectedRows() > 0) {
+            return redirect()->to('/empleados')->with('success', 'Empleado agregado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'No se realizaron cambios (verifique el código del empleado).');
         }
-
-        // 3. Preparar datos para guardar
-        $data = [
-            'nombre_departamento' => $this->request->getPost('nombre_departamento'),
-            'distancia_km'        => $this->request->getPost('distancia_km'),
-        ];
-
-        // 4. Guardar en la base de datos
-        $this->departamentoModel->save($data);
-
-        // 5. Redireccionar con mensaje de éxito
-        return redirect()->to(base_url('departamento'))->with('success', 'Departamento creado exitosamente.');
     }
 
-    /**
-     * Muestra el formulario para editar un departamento existente.
-     * @param int $id El ID del departamento a editar.
-     */
-    public function edit($id = null)
+ // ✏️ Editar
+    public function update($id)
     {
-        // 1. Buscar el departamento
-        $departamento = $this->departamentoModel->find($id);
+        $data = $this->request->getPost([
+            'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        ]);
 
-        if (!$departamento) {
-            // Si no encuentra, redirigir con error
-            return redirect()->to(base_url('departamento'))->with('error', 'Departamento no encontrado.');
+        if ($this->empleadosModel->update($id, $data)) {
+            return redirect()->to('/empleados')->with('success', 'Empleado actualizado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'Error al actualizar el empleado.');
         }
-
-        $data = [
-            'title'        => 'Editar Departamento',
-            'departamento' => $departamento,
-        ];
-
-        return view('departamento/edit', $data);
     }
 
-    /**
-     * Procesa y actualiza un registro de departamento.
-     * @param int $id El ID del departamento a actualizar.
-     */
-    public function update($id = null)
+      // ❌ Eliminar
+    public function delete($id)
     {
-        // 1. Obtener el departamento actual para la validación 'is_unique'
-        $departamento = $this->departamentoModel->find($id);
-
-        if (!$departamento) {
-            return redirect()->to(base_url('departamento'))->with('error', 'Departamento no encontrado para actualizar.');
+        if ($this->empleadosModel->delete($id)) {
+            return redirect()->to('/empleados')->with('success', 'Empleado eliminado correctamente.');
+        } else {
+            return redirect()->back()->with('error', 'Error al eliminar el empleado.');
         }
-
-        // 2. Definir reglas de validación (excluyendo el nombre actual si no cambia)
-        $rules = [
-            'nombre_departamento' => "required|min_length[3]|max_length[150]|is_unique[departamentos.nombre_departamento,id_departamento,{$id}]",
-            'distancia_km'        => 'required|numeric|greater_than_equal_to[0]',
-        ];
-
-        // 3. Ejecutar validación
-        if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        // 4. Preparar datos para actualizar
-        $data = [
-            'id_departamento'     => $id,
-            'nombre_departamento' => $this->request->getPost('nombre_departamento'),
-            'distancia_km'        => $this->request->getPost('distancia_km'),
-        ];
-
-        // 5. Actualizar en la base de datos
-        $this->departamentoModel->save($data);
-
-        // 6. Redireccionar con mensaje de éxito
-        return redirect()->to(base_url('departamento'))->with('success', 'Departamento actualizado exitosamente.');
-    }
-
-    /**
-     * Elimina un registro de departamento.
-     * @param int $id El ID del departamento a eliminar.
-     */
-    public function delete($id = null)
-    {
-        // 1. Buscar el departamento
-        $departamento = $this->departamentoModel->find($id);
-
-        if (!$departamento) {
-            return redirect()->to(base_url('departamento'))->with('error', 'Departamento no encontrado para eliminar.');
-        }
-
-        // 2. Eliminar el registro
-        $this->departamentoModel->delete($id);
-
-        // 3. Redireccionar con mensaje de éxito
-        return redirect()->to(base_url('departamento'))->with('success', 'Departamento eliminado exitosamente.');
     }
 }
+
+   
