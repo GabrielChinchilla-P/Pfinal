@@ -86,6 +86,54 @@
               </td>
             </tr>
 
+<!-- 🟢 MODAL AGREGAR NUEVO -->
+<div class="modal fade" id="modalAgregar" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form action="<?= site_url('informe_gastos/store') ?>" method="post">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title"><i class="bi bi-plus-circle"></i> Nuevo Gasto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row g-3">
+          <div class="col-md-6">
+            <label>ID Empleado</label>
+            <input type="number" name="id_empleado" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <label>ID Departamento</label>
+            <input type="number" name="id_departamento" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label>Fecha Visita</label>
+            <input type="date" name="fecha_visita" class="form-control" required>
+          </div>
+          <div class="col-md-4">
+            <label>Alimentación (Q)</label>
+            <input type="number" step="0.01" name="alimentacion" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Alojamiento (Q)</label>
+            <input type="number" step="0.01" name="alojamiento" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Combustible (Q)</label>
+            <input type="number" step="0.01" name="combustible" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Otros (Q)</label>
+            <input type="number" step="0.01" name="otros" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
                 <!-- ✏️ MODAL EDITAR -->
             <div class="modal fade" id="modalEditar<?= $row['id_gasto'] ?>" tabindex="-1">
               <div class="modal-dialog modal-lg">

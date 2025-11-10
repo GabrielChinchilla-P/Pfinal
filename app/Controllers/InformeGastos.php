@@ -94,6 +94,43 @@ class InformeGastos extends Controller
         return redirect()->back()->with('error', 'Error al actualizar el gasto.');
     }
 
+// 🟢 Guardar nuevo gasto
+    public function store()
+    {
+        $data = $this->request->getPost([
+            'id_empleado',
+            'id_departamento',
+            'fecha_visita',
+            'alimentacion',
+            'alojamiento',
+            'combustible',
+            'otros'
+        ]);
+
+        // Validar empleado
+        $empleado = $this->empleadoModel->find($data['id_empleado']);
+        if (!$empleado) {
+            return redirect()->back()->with('error', 'El empleado no existe.');
+        }
+
+        // Calcular total
+        $data['alimentacion'] = (float)($data['alimentacion'] ?? 0);
+        $data['alojamiento'] = (float)($data['alojamiento'] ?? 0);
+        $data['combustible'] = (float)($data['combustible'] ?? 0);
+        $data['otros'] = (float)($data['otros'] ?? 0);
+        $data['total_gasto'] = $data['alimentacion'] + $data['alojamiento'] + $data['combustible'] + $data['otros'];
+
+        // Generar ID
+        $ultimo = $this->informeModel->selectMax('id_gasto')->first();
+        $siguiente = (int)($ultimo['id_gasto'] ?? 0) + 1;
+        $data['id_gasto'] = (string)$siguiente;
+
+        if ($this->informeModel->insert($data)) {
+            return redirect()->to('/informe_gastos')->with('success', 'Gasto guardado correctamente.');
+        }
+        return redirect()->back()->with('error', 'Error al guardar el gasto.');
+    }
+
  // 🗑️ Eliminar gasto
     public function delete($id)
     {
