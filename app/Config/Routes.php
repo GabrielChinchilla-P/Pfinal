@@ -68,7 +68,7 @@ $routes->get('informe_gastos', 'InformeGastos::index');
 $routes->post('informe_gastos/buscar', 'InformeGastos::buscar');
    
 
-   
+$routes->get('informe_gastos/delete/(:segment)', 'InformeGastos::delete/$1');   
  // ---------------------------------
 
     // MÓDULO DE DEPARTAMENTO (NUEVO)
