@@ -4,7 +4,7 @@ use CodeIgniter\Model;
 
 class BonificacionModel extends Model
 {
-    protected $table      = 'bonificacion'; // Aseguramos el nombre correcto de la tabla (plural)
+    protected $table      = 'bonificacion';
     protected $primaryKey = 'id_bonificacion';
 
     protected $useAutoIncrement = true;
