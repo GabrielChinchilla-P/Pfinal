@@ -129,24 +129,9 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     });
 
     // --- Rutas para el Módulo de Bonificaciones ---
-    $routes->get('bonificacion', 'Bonificacion::index', ['filter' => 'auth']);
-    
-    $routes->group('/', ['filter' => 'auth'], static function ($routes){
-    // Listado y Búsqueda (GET /bonificacion)
-    $routes->get('/', 'Bonificacion::index'); 
-
-    // Formulario de Creación (GET /bonificacion/create)
-    $routes->get('create', 'Bonificacion::create');
-    
-    // Procesa el guardado (POST /bonificacion/store)
-    $routes->post('store', 'Bonificacion::store');
-    
-    // Formulario de Edición (GET /bonificacion/edit/ID)
-    $routes->get('edit/(:num)', 'Bonificacion::edit/$1');
-    
-    // Procesa la actualización (POST /bonificacion/update/ID)
-    $routes->post('update/(:num)', 'Bonificacion::update/$1');
-    
-    // Eliminar registro (GET /bonificacion/delete/ID)
-    $routes->get('delete/(:num)', 'Bonificacion::delete/$1');
+    $routes->get('/bonificacion', 'Bonificacion::index');
+    $routes->get('/bonificacion/buscar', 'Bonificacion::buscar');
+    $routes->post('/bonificacion/store', 'Bonificacion::store');
+    $routes->post('/bonificacion/update/(:any)', 'Bonificacion::update/$1');
+    $routes->get('/bonificacion/delete/(:any)', 'Bonificacion::delete/$1');
 });
