@@ -67,7 +67,7 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
 $routes->get('informe_gastos', 'InformeGastos::index');
 $routes->post('informe_gastos/buscar', 'InformeGastos::buscar');
    
-
+$routes->post('informe_gastos/update/(:segment)', 'InformeGastos::update/$1');
 $routes->get('informe_gastos/delete/(:segment)', 'InformeGastos::delete/$1');   
  // ---------------------------------
 

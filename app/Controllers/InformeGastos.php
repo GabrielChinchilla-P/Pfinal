@@ -69,6 +69,30 @@ class InformeGastos extends Controller
             . view('templates/footer');
     }
 
+     // ✏️ Actualizar gasto
+    public function update($id)
+    {
+        $data = $this->request->getPost([
+            'id_empleado',
+            'id_departamento',
+            'fecha_visita',
+            'alimentacion',
+            'alojamiento',
+            'combustible',
+            'otros'
+        ]);
+
+        $data['alimentacion'] = (float)($data['alimentacion'] ?? 0);
+        $data['alojamiento'] = (float)($data['alojamiento'] ?? 0);
+        $data['combustible'] = (float)($data['combustible'] ?? 0);
+        $data['otros'] = (float)($data['otros'] ?? 0);
+        $data['total_gasto'] = $data['alimentacion'] + $data['alojamiento'] + $data['combustible'] + $data['otros'];
+
+        if ($this->informeModel->update($id, $data)) {
+            return redirect()->to('/informe_gastos')->with('success', 'Gasto actualizado correctamente.');
+        }
+        return redirect()->back()->with('error', 'Error al actualizar el gasto.');
+    }
 
  // 🗑️ Eliminar gasto
     public function delete($id)
