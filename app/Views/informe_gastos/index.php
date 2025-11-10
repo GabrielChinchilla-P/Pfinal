@@ -86,6 +86,62 @@
               </td>
             </tr>
 
+                <!-- ✏️ MODAL EDITAR -->
+            <div class="modal fade" id="modalEditar<?= $row['id_gasto'] ?>" tabindex="-1">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <form action="<?= site_url('informe_gastos/update/'.$row['id_gasto']) ?>" method="post">
+                    <div class="modal-header bg-primary text-white">
+                      <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Editar Gasto</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body row g-3">
+                      <div class="col-md-6">
+                        <label>ID Empleado</label>
+                        <input type="number" name="id_empleado" value="<?= esc($row['id_empleado']) ?>" class="form-control" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label>ID Departamento</label>
+                        <input type="number" name="id_departamento" value="<?= esc($row['id_departamento']) ?>" class="form-control" required>
+                      </div>
+                      <div class="col-md-4">
+                        <label>Fecha Visita</label>
+                        <input type="date" name="fecha_visita" value="<?= esc($row['fecha_visita']) ?>" class="form-control" required>
+                      </div>
+                      <div class="col-md-4">
+                        <label>Alimentación (Q)</label>
+                        <input type="number" step="0.01" name="alimentacion" value="<?= esc($row['alimentacion']) ?>" class="form-control">
+                      </div>
+                      <div class="col-md-4">
+                        <label>Alojamiento (Q)</label>
+                        <input type="number" step="0.01" name="alojamiento" value="<?= esc($row['alojamiento']) ?>" class="form-control">
+                      </div>
+                      <div class="col-md-4">
+                        <label>Combustible (Q)</label>
+                        <input type="number" step="0.01" name="combustible" value="<?= esc($row['combustible']) ?>" class="form-control">
+                      </div>
+                      <div class="col-md-4">
+                        <label>Otros (Q)</label>
+                        <input type="number" step="0.01" name="otros" value="<?= esc($row['otros']) ?>" class="form-control">
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <tr><td colspan="12" class="text-center text-muted">No hay registros disponibles.</td></tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
                 <!-- 💼 MODAL CRÉDITOS -->
 <div class="modal fade" id="modalCreditos" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
