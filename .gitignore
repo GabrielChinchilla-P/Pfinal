@@ -1,0 +1,51 @@
+# ===========================
+# .gitignore para CodeIgniter 4
+# ===========================
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración del editor
+.vscode/
+.idea/
+
+# Dependencias y vendor
+/vendor/
+node_modules/
+
+# Archivos del entorno local
+.env
+.env.*
+
+# Archivos de caché y temporales de CodeIgniter
+writable/*
+!writable/index.html
+
+# Archivos de logs
+writable/logs/*
+!writable/logs/index.html
+
+# Archivos de sesiones
+writable/session/*
+!writable/session/index.html
+
+# Archivos de depuración (Debugbar)
+writable/debugbar/*
+!writable/debugbar/index.html
+
+# Copias de respaldo o temporales
+*.bak
+*.tmp
+*.swp
+
+# Archivos de base de datos locales
+*.sqlite
+*.db
+*.accdb
+*.mdb
+
+# Archivos de entorno de XAMPP o local
+.phpunit.result.cache
+/public/uploads/*
+!public/uploads/index.html
