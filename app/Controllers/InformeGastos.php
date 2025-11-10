@@ -37,4 +37,36 @@ class InformeGastos extends Controller
             . view('informe_gastos/index', $data)
             . view('templates/footer');
     }
-}
+
+    // 🔍 Buscar por ID
+    public function buscar()
+    {
+        $data['empleados'] = $this->empleadoModel->orderBy('id_empleado', 'ASC')->findAll();
+        $id = $this->request->getPost('id_gasto');
+
+        if ($id) {
+            $informe = $this->informeModel
+                ->select('
+                    informe_gastos.*,
+                    empleados.nombre AS emp_nombre,
+                    empleados.apellido AS emp_apellido,
+                    departamentos.id_departamento AS emp_departamento
+                ')
+                ->join('empleados', 'empleados.id_empleado = informe_gastos.id_empleado', 'left')
+                ->join('departamentos', 'departamentos.id_departamento = informe_gastos.id_departamento', 'left')
+                ->where('informe_gastos.id_gasto', $id)
+                ->first();
+
+            $data['informes'] = $informe ? [$informe] : [];
+            if (!$informe)
+                $this->session->setFlashdata('error', 'No se encontró el gasto con ese ID.');
+        } else {
+            $data['informes'] = $this->informeModel->getInformesConEmpleados();
+        }
+
+        return view('templates/header')
+            . view('informe_gastos/index', $data)
+            . view('templates/footer');
+    }
+
+}    

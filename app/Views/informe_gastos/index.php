@@ -5,6 +5,28 @@
     <i class="bi bi-file-earmark-text"></i> Informe de Gastos
   </h2>
 
+<!-- ✅ BOTONES SUPERIORES -->
+  <div class="d-flex justify-content-between mb-3">
+    <div>
+      <a href="<?= base_url('/menu'); ?>" class="btn btn-secondary me-2">
+        <i class="bi bi-house-door"></i> Regresar al Menú
+      </a>
+      <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalCreditos">
+        <i class="bi bi-people-fill"></i> Créditos
+      </button>
+    </div>
+
+    <div class="d-flex">
+      <form method="post" action="<?= site_url('informe_gastos/buscar') ?>" class="d-flex me-2">
+        <input type="text" name="id_gasto" class="form-control me-2" placeholder="Buscar por ID">
+        <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+        <i class="bi bi-plus-circle"></i> Nuevo Gasto
+      </button>
+    </div>
+  </div>
+
   <!-- ✅ ALERTAS -->
   <?php if (session()->getFlashdata('success')): ?>
     <div id="alerta" class="alert alert-success alert-dismissible fade show text-center position-fixed top-0 start-50 translate-middle-x shadow" style="z-index:1055; width:60%; margin-top:10px;">
