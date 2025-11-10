@@ -78,7 +78,13 @@
                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar<?= $row['id_gasto'] ?>">
                   <i class="bi bi-pencil"></i>
                 </button>
-
+              <a href="<?= site_url('informe_gastos/delete/'.$row['id_gasto']) ?>" 
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Seguro que desea eliminar este gasto?')">
+                   <i class="bi bi-trash"></i>
+                </a>
+              </td>
+            </tr>
 
                 <!-- 💼 MODAL CRÉDITOS -->
 <div class="modal fade" id="modalCreditos" tabindex="-1">

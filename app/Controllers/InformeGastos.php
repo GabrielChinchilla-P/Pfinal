@@ -69,4 +69,27 @@ class InformeGastos extends Controller
             . view('templates/footer');
     }
 
+
+ // 🗑️ Eliminar gasto
+    public function delete($id)
+    {
+        $informe = $this->informeModel->find($id);
+        if (!$informe) {
+            return redirect()->to('/informe_gastos')->with('error', 'El gasto no existe o ya fue eliminado.');
+        }
+
+        if ($this->informeModel->delete($id)) {
+            return redirect()->to('/informe_gastos')->with('success', 'Gasto eliminado correctamente.');
+        }
+
+        return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el gasto.');
+    }
+
+    // 📥 Autorrellenado de empleados
+    public function getEmpleado($id_empleado)
+    {
+        $empleado = $this->empleadoModel->find($id_empleado);
+        return $this->response->setJSON($empleado ? $empleado : ['error' => 'Empleado no encontrado']);
+    }
+
 }    
