@@ -87,3 +87,5 @@ $routes->get('informe_gastos/delete/(:segment)', 'InformeGastos::delete/$1');
     $routes->get('bonificacion/edit/(:segment)', 'Bonificacion::edit/$1');
     $routes->post('bonificacion/update/(:segment)', 'Bonificacion::update/$1');
     $routes->get('bonificacion/delete/(:segment)', 'Bonificacion::delete/$1');
+
+    $routes->setAutoRoute(true);
