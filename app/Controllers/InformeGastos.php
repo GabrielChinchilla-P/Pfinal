@@ -1,156 +1,174 @@
-<?php namespace App\Controllers;
+<?php 
+// APPPATH/Controllers/InformeGasto.php
 
-use App\Models\InformeModel;
-use App\Models\EmpleadosModel;
-use CodeIgniter\Controller;
+namespace App\Controllers;
 
-class InformeGastos extends Controller
+use App\Controllers\BaseController;
+use App\Models\InformeGastoModel;
+use App\Models\EmpleadoModel;
+use App\Models\DepartamentoModel;
+
+class InformeGasto extends BaseController
 {
     protected $informeModel;
     protected $empleadoModel;
-    protected $session;
+    protected $departamentoModel;
 
     public function __construct()
     {
-        $this->informeModel = new InformeModel();
-        $this->empleadoModel = new EmpleadosModel();
-        $this->session = session();
+        $this->informeModel = new InformeGastoModel();
+        $this->empleadoModel = new EmpleadoModel();
+        $this->departamentoModel = new DepartamentoModel();
     }
 
-    // 🏠 Página principal
+    /** Listar todos los informes */
     public function index()
     {
-        $data['informes'] = $this->informeModel
-            ->select('
-                informe_gastos.*,
-                empleados.nombre AS emp_nombre,
-                empleados.apellido AS emp_apellido,
-                departamentos.id_departamento AS emp_departamento
-            ')
-            ->join('empleados', 'empleados.id_empleado = informe_gastos.id_empleado', 'left')
-            ->join('departamentos', 'departamentos.id_departamento = informe_gastos.id_departamento', 'left')
-            ->findAll();
+        $data = [
+            'informes' => $this->informeModel->getInformeConEmpleadoYDepartamento(),
+            'title'    => 'Gestión de Informes de Gastos'
+        ];
 
-        $data['empleados'] = $this->empleadoModel->findAll();
-
-        return view('templates/header')
-            . view('informe_gastos/index', $data)
-            . view('templates/footer');
+        echo view('layouts/header', $data);
+        echo view('infgastos/index', $data);
+        echo view('layouts/footer');
     }
 
-    // 🔍 Buscar por ID
-    public function buscar()
+    /** Mostrar formulario para crear informe */
+    public function create()
     {
-        $data['empleados'] = $this->empleadoModel->orderBy('id_empleado', 'ASC')->findAll();
-        $id = $this->request->getPost('id_gasto');
+        $data = [
+            'empleados'     => $this->empleadoModel->findAll(),
+            'departamentos' => $this->departamentoModel->findAll(),
+            'title'         => 'Crear Nuevo Informe de Gasto'
+        ];
 
-        if ($id) {
-            $informe = $this->informeModel
-                ->select('
-                    informe_gastos.*,
-                    empleados.nombre AS emp_nombre,
-                    empleados.apellido AS emp_apellido,
-                    departamentos.id_departamento AS emp_departamento
-                ')
-                ->join('empleados', 'empleados.id_empleado = informe_gastos.id_empleado', 'left')
-                ->join('departamentos', 'departamentos.id_departamento = informe_gastos.id_departamento', 'left')
-                ->where('informe_gastos.id_gasto', $id)
-                ->first();
-
-            $data['informes'] = $informe ? [$informe] : [];
-            if (!$informe)
-                $this->session->setFlashdata('error', 'No se encontró el gasto con ese ID.');
-        } else {
-            $data['informes'] = $this->informeModel->getInformesConEmpleados();
-        }
-
-        return view('templates/header')
-            . view('informe_gastos/index', $data)
-            . view('templates/footer');
+        echo view('layouts/header', $data);
+        echo view('infgastos/create', $data);
+        echo view('layouts/footer');
     }
 
-     // ✏️ Actualizar gasto
-    public function update($id)
-    {
-        $data = $this->request->getPost([
-            'id_empleado',
-            'id_departamento',
-            'fecha_visita',
-            'alimentacion',
-            'alojamiento',
-            'combustible',
-            'otros'
-        ]);
-
-        $data['alimentacion'] = (float)($data['alimentacion'] ?? 0);
-        $data['alojamiento'] = (float)($data['alojamiento'] ?? 0);
-        $data['combustible'] = (float)($data['combustible'] ?? 0);
-        $data['otros'] = (float)($data['otros'] ?? 0);
-        $data['total_gasto'] = $data['alimentacion'] + $data['alojamiento'] + $data['combustible'] + $data['otros'];
-
-        if ($this->informeModel->update($id, $data)) {
-            return redirect()->to('/informe_gastos')->with('success', 'Gasto actualizado correctamente.');
-        }
-        return redirect()->back()->with('error', 'Error al actualizar el gasto.');
-    }
-
-// 🟢 Guardar nuevo gasto
+    /** Guardar un nuevo informe */
     public function store()
     {
-        $data = $this->request->getPost([
-            'id_empleado',
-            'id_departamento',
-            'fecha_visita',
-            'alimentacion',
-            'alojamiento',
-            'combustible',
-            'otros'
-        ]);
+        $cod_depto = $this->request->getPost('cod_depto');
+        $otros = (float) $this->request->getPost('otros');
 
-        // Validar empleado
-        $empleado = $this->empleadoModel->find($data['id_empleado']);
-        if (!$empleado) {
-            return redirect()->back()->with('error', 'El empleado no existe.');
+        // Obtener costos fijos del departamento
+        $dept_costos = $this->departamentoModel->obtenerCostosFijos($cod_depto);
+        if (!$dept_costos) {
+            return redirect()->back()->withInput()->with('error', 'No se encontraron costos fijos para ese departamento.');
         }
 
-        // Calcular total
-        $data['alimentacion'] = (float)($data['alimentacion'] ?? 0);
-        $data['alojamiento'] = (float)($data['alojamiento'] ?? 0);
-        $data['combustible'] = (float)($data['combustible'] ?? 0);
-        $data['otros'] = (float)($data['otros'] ?? 0);
-        $data['total_gasto'] = $data['alimentacion'] + $data['alojamiento'] + $data['combustible'] + $data['otros'];
+        $total = (float)$dept_costos['alojamiento'] 
+               + (float)$dept_costos['combustible'] 
+               + (float)$dept_costos['alimentacion'] 
+               + $otros;
 
-        // Generar ID
-        $ultimo = $this->informeModel->selectMax('id_gasto')->first();
-        $siguiente = (int)($ultimo['id_gasto'] ?? 0) + 1;
-        $data['id_gasto'] = (string)$siguiente;
+        $data = [
+            'id_informe'   => 'INF' . uniqid(),
+            'cod_empleado' => $this->request->getPost('cod_empleado'),
+            'nombre'       => $this->request->getPost('nombre') ?? '',
+            'apellido'     => $this->request->getPost('apellido') ?? '',
+            'departamento' => $this->request->getPost('departamento') ?? '',
+            'fecha_inicio' => $this->request->getPost('fecha_inicio'),
+            'fecha_fin'    => $this->request->getPost('fecha_fin'),
+            'fecha_visita' => $this->request->getPost('fecha_visita'),
+            'cod_depto'    => $cod_depto,
+            'descripcion'  => $this->request->getPost('descripcion'),
+            'otros'        => $otros,
+            'total'        => $total,
+            'alimentacion' => $dept_costos['alimentacion'],
+            'alojamiento'  => $dept_costos['alojamiento'],
+            'combustible'  => $dept_costos['combustible']
+        ];
 
-        if ($this->informeModel->insert($data)) {
-            return redirect()->to('/informe_gastos')->with('success', 'Gasto guardado correctamente.');
+        $result = $this->informeModel->crearInforme($data);
+
+        if ($result) {
+            return redirect()->to(base_url('informegasto'))->with('msg', 'Informe guardado correctamente.');
         }
-        return redirect()->back()->with('error', 'Error al guardar el gasto.');
+
+        return redirect()->back()->withInput()->with('errors', $this->informeModel->errors() ?: ['Error desconocido al guardar el informe.']);
     }
 
- // 🗑️ Eliminar gasto
+    /** Mostrar formulario para editar informe */
+    public function edit($id)
+    {
+        $informe = $this->informeModel->getInformePorID($id);
+        if (!$informe) {
+            return redirect()->to(base_url('informegasto'))->with('error', 'Informe no encontrado.');
+        }
+
+        $data = [
+            'informe'       => $informe,
+            'empleados'     => $this->empleadoModel->findAll(),
+            'departamentos' => $this->departamentoModel->findAll(),
+            'title'         => 'Editar Informe de Gastos'
+        ];
+
+        echo view('layouts/header', $data);
+        echo view('infgastos/edit', $data);
+        echo view('layouts/footer');
+    }
+
+    /** Actualizar informe existente */
+    public function update($id)
+    {
+        $informe = $this->informeModel->getInformePorID($id);
+        if (!$informe) {
+            return redirect()->to(base_url('informegasto'))->with('error', 'Informe no encontrado.');
+        }
+
+        $cod_depto = $this->request->getPost('cod_depto');
+        $otros = (float) $this->request->getPost('otros');
+
+        // Obtener costos fijos del departamento
+        $dept_costos = $this->departamentoModel->obtenerCostosFijos($cod_depto);
+        if (!$dept_costos) {
+            return redirect()->back()->withInput()->with('error', 'No se encontraron costos fijos para ese departamento.');
+        }
+
+        $total = (float)$dept_costos['alojamiento'] 
+               + (float)$dept_costos['combustible'] 
+               + (float)$dept_costos['alimentacion'] 
+               + $otros;
+
+        $data = [
+            'cod_empleado' => $this->request->getPost('cod_empleado'),
+            'nombre'       => $this->request->getPost('nombre') ?? '',
+            'apellido'     => $this->request->getPost('apellido') ?? '',
+            'departamento' => $this->request->getPost('departamento') ?? '',
+            'fecha_inicio' => $this->request->getPost('fecha_inicio'),
+            'fecha_fin'    => $this->request->getPost('fecha_fin'),
+            'fecha_visita' => $this->request->getPost('fecha_visita'),
+            'cod_depto'    => $cod_depto,
+            'descripcion'  => $this->request->getPost('descripcion'),
+            'otros'        => $otros,
+            'total'        => $total,
+            'alimentacion' => $dept_costos['alimentacion'],
+            'alojamiento'  => $dept_costos['alojamiento'],
+            'combustible'  => $dept_costos['combustible']
+        ];
+
+        $result = $this->informeModel->actualizarInforme($id, $data);
+
+        if ($result) {
+            return redirect()->to(base_url('informegasto'))->with('msg', 'Informe actualizado correctamente.');
+        }
+
+        return redirect()->back()->withInput()->with('errors', $this->informeModel->errors() ?: ['Error desconocido al actualizar el informe.']);
+    }
+
+    /** Eliminar un informe */
     public function delete($id)
     {
-        $informe = $this->informeModel->find($id);
+        $informe = $this->informeModel->getInformePorID($id);
         if (!$informe) {
-            return redirect()->to('/informe_gastos')->with('error', 'El gasto no existe o ya fue eliminado.');
+            return redirect()->to(base_url('informegasto'))->with('error', 'Informe no encontrado.');
         }
 
-        if ($this->informeModel->delete($id)) {
-            return redirect()->to('/informe_gastos')->with('success', 'Gasto eliminado correctamente.');
-        }
-
-        return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el gasto.');
+        $this->informeModel->eliminarInforme($id);
+        return redirect()->to(base_url('informegasto'))->with('msg', 'Informe eliminado correctamente.');
     }
-
-    // 📥 Autorrellenado de empleados
-    public function getEmpleado($id_empleado)
-    {
-        $empleado = $this->empleadoModel->find($id_empleado);
-        return $this->response->setJSON($empleado ? $empleado : ['error' => 'Empleado no encontrado']);
-    }
-
-}    
+}
