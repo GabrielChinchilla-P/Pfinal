@@ -1,4 +1,3 @@
-<?= $this->include('layouts/header'); ?>
 <div class="container mt-4">
     <h3><i class="fa-solid fa-pen-to-square"></i> Editar Nómina</h3>
     <form action="<?= base_url('nomina/update/'.$nomina['id_nomina']) ?>" method="post" class="mt-3">
