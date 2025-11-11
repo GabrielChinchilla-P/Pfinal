@@ -8,6 +8,8 @@ class Creditos extends Controller
 {
     public function index()
     {
-        return view('creditos/creditos', ['title' => 'Créditos']);
+        // Muestra la vista de créditos
+        return view('layouts/header')
+            . view('creditos/creditos');
     }
 }
