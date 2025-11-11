@@ -46,16 +46,17 @@
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="PUT">
 
+            <!-- EMPLEADO Y DEPARTAMENTO -->
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <label for="id_empleado" class="form-label">Empleado</label>
-                    <select name="id_empleado" id="id_empleado" class="form-select" required>
+                    <label for="cod_empleado" class="form-label">Empleado</label>
+                    <select name="cod_empleado" id="cod_empleado" class="form-select" required>
                         <option value="">-- Seleccione empleado --</option>
                         <?php foreach($empleados as $e): ?>
-                        <option value="<?= esc($e['cod_empleado']) ?>" 
-                            data-nombre="<?= esc($e['nombre']) ?>" 
+                        <option value="<?= esc($e['cod_empleado']) ?>"
+                            data-nombre="<?= esc($e['nombre']) ?>"
                             data-apellido="<?= esc($e['apellido']) ?>"
-                            <?= ($informe['cod_empleado'] ?? '') == $e['cod_empleado'] ? 'selected' : '' ?> >
+                            <?= ($informe['cod_empleado'] ?? '') == $e['cod_empleado'] ? 'selected' : '' ?>>
                             <?= esc($e['nombre'].' '.$e['apellido']) ?>
                         </option>
                         <?php endforeach; ?>
@@ -63,13 +64,13 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="id_departamento" class="form-label">Departamento</label>
-                    <select name="id_departamento" id="id_departamento" class="form-select" required>
+                    <label for="cod_depto" class="form-label">Departamento</label>
+                    <select name="cod_depto" id="cod_depto" class="form-select" required>
                         <option value="">-- Seleccione departamento --</option>
                         <?php foreach($departamentos as $d): ?>
                         <option value="<?= esc($d['depto']) ?>"
                             data-descripcion="<?= esc($d['descripcion']) ?>"
-                            <?= ($informe['cod_depto'] ?? '') == $d['depto'] ? 'selected' : '' ?> >
+                            <?= ($informe['cod_depto'] ?? '') == $d['depto'] ? 'selected' : '' ?>>
                             <?= esc($d['descripcion']) ?>
                         </option>
                         <?php endforeach; ?>
@@ -77,6 +78,7 @@
                 </div>
             </div>
 
+            <!-- FECHA Y GASTOS -->
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label for="fecha_visita" class="form-label">Fecha Visita</label>
@@ -88,46 +90,54 @@
                 </div>
             </div>
 
+            <!-- COSTOS FIJOS -->
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label for="alimentacion" class="form-label">Alimentación</label>
-                    <input type="number" name="alimentacion" id="alimentacion" class="form-control" value="<?= esc($informe['alimentacion'] ?? 0) ?>" readonly>
+                    <input type="number" name="alimentacion" id="alimentacion" class="form-control" step="0.01"
+                        value="<?= esc($informe['alimentacion'] ?? 0) ?>" readonly>
                 </div>
                 <div class="col-md-4">
                     <label for="alojamiento" class="form-label">Alojamiento</label>
-                    <input type="number" name="alojamiento" id="alojamiento" class="form-control" value="<?= esc($informe['alojamiento'] ?? 0) ?>" readonly>
+                    <input type="number" name="alojamiento" id="alojamiento" class="form-control" step="0.01"
+                        value="<?= esc($informe['alojamiento'] ?? 0) ?>" readonly>
                 </div>
                 <div class="col-md-4">
                     <label for="combustible" class="form-label">Combustible</label>
-                    <input type="number" name="combustible" id="combustible" class="form-control" value="<?= esc($informe['combustible'] ?? 0) ?>" readonly>
+                    <input type="number" name="combustible" id="combustible" class="form-control" step="0.01"
+                        value="<?= esc($informe['combustible'] ?? 0) ?>" readonly>
                 </div>
             </div>
 
+            <!-- DESCRIPCIÓN -->
             <div class="mb-3">
                 <label for="descripcion" class="form-label">Descripción de la Visita</label>
                 <textarea name="descripcion" id="descripcion" class="form-control" rows="3"><?= esc($informe['descripcion'] ?? '') ?></textarea>
             </div>
 
+            <!-- BOTONES -->
             <div class="text-end">
-                <a href="<?= site_url('informegasto') ?>" class="btn btn-secondary me-2"><i class="fa-solid fa-arrow-left me-1"></i> Volver</a>
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk me-1"></i> Guardar Cambios</button>
+                <a href="<?= site_url('informegasto') ?>" class="btn btn-secondary me-2">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Guardar Cambios
+                </button>
             </div>
 
-            <!-- Campos ocultos -->
-            <input type="hidden" name="nombre_empleado_hidden" id="nombre_empleado_hidden">
-            <input type="hidden" name="apellido_empleado_hidden" id="apellido_empleado_hidden">
-            <input type="hidden" name="nombre_departamento_hidden" id="nombre_departamento_hidden">
-
+            <!-- CAMPOS OCULTOS -->
+            <input type="hidden" name="nombre" id="nombre_empleado_hidden">
+            <input type="hidden" name="apellido" id="apellido_empleado_hidden">
+            <input type="hidden" name="departamento" id="nombre_departamento_hidden">
         </form>
-
     </div>
 </div>
 </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const selectEmpleado = document.getElementById('id_empleado');
-    const selectDepartamento = document.getElementById('id_departamento');
+    const selectEmpleado = document.getElementById('cod_empleado');
+    const selectDepartamento = document.getElementById('cod_depto');
 
     const nombreInput = document.getElementById('nombre_empleado_hidden');
     const apellidoInput = document.getElementById('apellido_empleado_hidden');
@@ -137,49 +147,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputAlojamiento = document.getElementById('alojamiento');
     const inputCombustible = document.getElementById('combustible');
 
+    // Actualiza los campos ocultos al cambiar empleado o depto
     function updateHiddenFields() {
-        const selectedEmpleadoOption = selectEmpleado.options[selectEmpleado.selectedIndex];
-        nombreInput.value = selectedEmpleadoOption?.getAttribute('data-nombre') || '';
-        apellidoInput.value = selectedEmpleadoOption?.getAttribute('data-apellido') || '';
+        const selectedEmpleado = selectEmpleado.options[selectEmpleado.selectedIndex];
+        nombreInput.value = selectedEmpleado?.getAttribute('data-nombre') || '';
+        apellidoInput.value = selectedEmpleado?.getAttribute('data-apellido') || '';
 
-        const selectedDepartamentoOption = selectDepartamento.options[selectDepartamento.selectedIndex];
-        departamentoInput.value = selectedDepartamentoOption?.getAttribute('data-descripcion') || '';
+        const selectedDepto = selectDepartamento.options[selectDepartamento.selectedIndex];
+        departamentoInput.value = selectedDepto?.getAttribute('data-descripcion') || '';
     }
 
+    // Obtiene los costos del departamento seleccionado
     selectDepartamento.addEventListener('change', function() {
         const deptoId = this.value;
-        if(!deptoId) {
-            inputAlimentacion.value = 0;
-            inputAlojamiento.value = 0;
-            inputCombustible.value = 0;
+        if (!deptoId) {
+            inputAlimentacion.value = inputAlojamiento.value = inputCombustible.value = 0;
             return;
         }
 
         fetch(`<?= base_url('departamento/ajaxCosto') ?>/${deptoId}`)
             .then(res => res.json())
             .then(data => {
-                const alimentacion = parseFloat(data.alimentacion) || 0;
-                const alojamiento = parseFloat(data.alojamiento) || 0;
-                const combustible = parseFloat(data.combustible) || 0;
-
-                inputAlimentacion.value = alimentacion;
-                inputAlojamiento.value = alojamiento;
-                inputCombustible.value = combustible;
-
-                if(alimentacion === 0 && alojamiento === 0 && combustible === 0) {
-                    alert('No se encontraron costos fijos para este departamento.');
-                }
+                inputAlimentacion.value = data.alimentacion ?? 0;
+                inputAlojamiento.value = data.alojamiento ?? 0;
+                inputCombustible.value = data.combustible ?? 0;
             })
             .catch(err => {
                 console.error('Error al obtener costos del departamento:', err);
-                inputAlimentacion.value = 0;
-                inputAlojamiento.value = 0;
-                inputCombustible.value = 0;
             });
     });
 
+    // Inicializar valores al cargar la página
     updateHiddenFields();
     selectDepartamento.dispatchEvent(new Event('change'));
+
     selectEmpleado.addEventListener('change', updateHiddenFields);
 });
 </script>
