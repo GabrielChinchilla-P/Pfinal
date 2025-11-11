@@ -92,3 +92,5 @@ $routes->get('informegasto/delete/(:any)', 'InformeGasto::delete/$1');
     $routes->get('bonificacion/delete/(:segment)', 'Bonificacion::delete/$1');
 
     $routes->setAutoRoute(true);
+
+$routes->get('creditos', 'Creditos::index');
