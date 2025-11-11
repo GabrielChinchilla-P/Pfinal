@@ -1,75 +1,118 @@
 <?php
-
 namespace App\Models;
 
 use CodeIgniter\Model;
 
 class InformeGastoModel extends Model
 {
-    protected $table = 'informes';
-    protected $primaryKey = 'id';
-    protected $allowedFields = [
-        'id_informe', 'cod_empleado', 'nombre', 'apellido',
-        'departamento', 'fecha_inicio', 'fecha_fin', 'fecha_visita',
-        'cod_depto', 'descripcion', 'otros', 'total',
-        'alimentacion', 'alojamiento', 'combustible'
+    protected $table            = 'informe_gastos';
+    protected $primaryKey       = 'id_informe';
+    protected $returnType       = 'array';
+    protected $useAutoIncrement = false;
+    protected $allowedFields    = [
+        'id_informe',
+        'cod_empleado',
+        'cod_depto',
+        'nombre',
+        'apellido',
+        'departamento',
+        'fecha_inicio',
+        'fecha_fin',
+        'fecha_visita',
+        'descripcion',
+        'alimentacion',
+        'alojamiento',
+        'combustible',
+        'otros',
+        'total'
     ];
 
-    /** Obtener todos los informes con datos relacionados */
+    /**
+     * 🔹 Obtener todos los informes con JOIN de empleados y departamentos
+     */
     public function getInformeConEmpleadoYDepartamento()
     {
-        return $this->select('informes.*, empleados.nombre AS nombre_empleado, empleados.apellido, departamentos.descripcion AS departamento')
-                    ->join('empleados', 'empleados.cod_empleado = informes.cod_empleado', 'left')
-                    ->join('departamentos', 'departamentos.cod_depto = informes.cod_depto', 'left')
+        return $this->select('informe_gastos.*, e.nombre AS nombre_empleado, e.apellido AS apellido_empleado, d.descripcion AS nombre_departamento')
+                    ->join('empleados e', 'e.cod_empleado = informe_gastos.cod_empleado', 'left')
+                    ->join('departamentos d', 'd.depto = informe_gastos.cod_depto', 'left')
+                    ->orderBy('informe_gastos.fecha_visita', 'DESC')
                     ->findAll();
     }
 
-    /** Buscar informes por nombre o rango de fechas */
-    public function buscarInformes($q = null, $fecha_inicio = null, $fecha_fin = null)
+    /**
+     * 🔍 Buscar informes por texto y rango de fechas
+     */
+    public function buscarInformes($searchQuery = null, $fechaInicio = null, $fechaFin = null)
     {
-        $builder = $this->select('informes.*, empleados.nombre AS nombre_empleado, empleados.apellido, departamentos.descripcion AS departamento')
-                        ->join('empleados', 'empleados.cod_empleado = informes.cod_empleado', 'left')
-                        ->join('departamentos', 'departamentos.cod_depto = informes.cod_depto', 'left');
+        $builder = $this->select('informe_gastos.*, e.nombre AS nombre_empleado, e.apellido AS apellido_empleado, d.descripcion AS nombre_departamento')
+                        ->join('empleados e', 'e.cod_empleado = informe_gastos.cod_empleado', 'left')
+                        ->join('departamentos d', 'd.depto = informe_gastos.cod_depto', 'left');
 
-        if (!empty($q)) {
+        // Filtro de texto (nombre, apellido o departamento)
+        if (!empty($searchQuery)) {
             $builder->groupStart()
-                    ->like('empleados.nombre', $q)
-                    ->orLike('empleados.apellido', $q)
-                    ->orLike('departamentos.descripcion', $q)
+                        ->like('e.nombre', $searchQuery)
+                        ->orLike('e.apellido', $searchQuery)
+                        ->orLike('d.descripcion', $searchQuery)
                     ->groupEnd();
         }
 
-        if (!empty($fecha_inicio) && !empty($fecha_fin)) {
-            $builder->where('informes.fecha_visita >=', $fecha_inicio)
-                    ->where('informes.fecha_visita <=', $fecha_fin);
-        } elseif (!empty($fecha_inicio)) {
-            $builder->where('informes.fecha_visita', $fecha_inicio);
+        // Filtro de rango de fechas
+        if (!empty($fechaInicio) && !empty($fechaFin)) {
+            $builder->where('informe_gastos.fecha_visita >=', $fechaInicio)
+                    ->where('informe_gastos.fecha_visita <=', $fechaFin);
+        } elseif (!empty($fechaInicio)) {
+            $builder->where('informe_gastos.fecha_visita >=', $fechaInicio);
+        } elseif (!empty($fechaFin)) {
+            $builder->where('informe_gastos.fecha_visita <=', $fechaFin);
         }
 
-        return $builder->findAll();
+        return $builder->orderBy('informe_gastos.fecha_visita', 'DESC')->findAll();
     }
 
-    /** Crear informe */
+    /**
+     * Crear nuevo informe
+     */
     public function crearInforme($data)
     {
+        if (empty($data['id_informe'])) {
+            $data['id_informe'] = 'INF' . uniqid();
+        }
+
+        if (!isset($data['total'])) {
+            $data['total'] = ($data['alimentacion'] ?? 0) + ($data['alojamiento'] ?? 0)
+                           + ($data['combustible'] ?? 0) + ($data['otros'] ?? 0);
+        }
+
         return $this->insert($data);
     }
 
-    /** Obtener informe por ID */
-    public function getInformePorID($id)
+    /**
+     * Actualizar informe existente
+     */
+    public function actualizarInforme($id_informe, $data)
     {
-        return $this->find($id);
+        if (!isset($data['total'])) {
+            $data['total'] = ($data['alimentacion'] ?? 0) + ($data['alojamiento'] ?? 0)
+                           + ($data['combustible'] ?? 0) + ($data['otros'] ?? 0);
+        }
+
+        return $this->update($id_informe, $data);
     }
 
-    /** Actualizar informe */
-    public function actualizarInforme($id, $data)
+    /**
+     * Eliminar informe
+     */
+    public function eliminarInforme($id_informe)
     {
-        return $this->update($id, $data);
+        return $this->delete($id_informe);
     }
 
-    /** Eliminar informe */
-    public function eliminarInforme($id)
+    /**
+     * Obtener un informe por su ID
+     */
+    public function getInformePorID($id_informe)
     {
-        return $this->delete($id);
+        return $this->where('id_informe', $id_informe)->first();
     }
 }
