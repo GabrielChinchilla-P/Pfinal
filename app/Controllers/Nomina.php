@@ -10,26 +10,52 @@ class Nomina extends BaseController
 {
     protected $nominaModel;
     protected $empleadoModel;
+    protected $session;
 
     public function __construct()
     {
-        $this->nominaModel = new NominaModel();
+        $this->nominaModel   = new NominaModel();
         $this->empleadoModel = new EmpleadoModel();
+        $this->session       = session();
     }
 
+    /**
+     * 📋 Lista de nómina con verificación de acceso
+     */
     public function index()
     {
-        $data['titulo'] = 'Gestión de Nómina';
-        $data['nominas'] = $this->nominaModel->findAll();
+        // Verificar rol de administrador
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado. No tienes permisos para ver la Nómina.');
+            return redirect()->to(base_url('menu'));
+        }
+
+        // Obtener registros
+        $nominas = $this->nominaModel->findAll();
+
+        // Convertir objetos a arrays para la vista
+        $nominas = array_map(function($n){ return (array) $n; }, $nominas);
+
+        $data['titulo']  = 'Gestión de Nómina';
+        $data['nominas'] = $nominas;
 
         echo view('layouts/header', $data);
         echo view('nomina/index', $data);
         echo view('layouts/footer');
     }
 
+    /**
+     * 🧾 Formulario para crear nueva nómina
+     */
     public function create()
     {
-        $data['titulo'] = 'Registrar Nómina';
+        // Verificar rol
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado.');
+            return redirect()->to(base_url('menu'));
+        }
+
+        $data['titulo']    = 'Registrar Nómina';
         $data['empleados'] = $this->empleadoModel->findAll();
 
         echo view('layouts/header', $data);
@@ -37,58 +63,99 @@ class Nomina extends BaseController
         echo view('layouts/footer');
     }
 
+    /**
+     * 💾 Guardar nueva nómina
+     */
     public function store()
     {
-        $sueldo_base = $this->request->getPost('sueldo_base');
-        $bonificacion = $this->request->getPost('bonificacion');
-        $igss = $this->request->getPost('IGSS');
-        $otros_desc = $this->request->getPost('otros_desc');
-        $liquido = $this->request->getPost('liquido');
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado.');
+            return redirect()->to(base_url('menu'));
+        }
+
+        $sueldo_base  = (float) $this->request->getPost('sueldo_base');
+        $bonificacion = (float) $this->request->getPost('bonificacion') ?? 0;
+        $IGSS         = (float) $this->request->getPost('IGSS') ?? 0;
+        $otros_desc   = (float) $this->request->getPost('otros_desc') ?? 0;
+        $liquido      = $sueldo_base + $bonificacion - $IGSS - $otros_desc;
 
         $this->nominaModel->save([
-            'id_visitador' => $this->request->getPost('id_visitador'),
-            'cod_empleado' => $this->request->getPost('cod_empleado'),
-            'nombre_empleado' => $this->request->getPost('nombre_empleado'),
-            'departamento' => $this->request->getPost('departamento'),
-            'sueldo_base' => $sueldo_base,
-            'bonificacion' => $bonificacion,
-            'IGSS' => $igss,
-            'otros_desc' => $otros_desc,
-            'liquido' => $liquido
+            'id_visitador'     => $this->request->getPost('id_visitador'),
+            'cod_empleado'     => $this->request->getPost('cod_empleado'),
+            'nombre_empleado'  => $this->request->getPost('nombre_empleado'),
+            'departamento'     => $this->request->getPost('departamento'),
+            'sueldo_base'      => $sueldo_base,
+            'bonificacion'     => $bonificacion,
+            'IGSS'             => $IGSS,
+            'otros_desc'       => $otros_desc,
+            'liquido'          => $liquido
         ]);
 
         return redirect()->to(base_url('nomina'))->with('msg', 'Registro guardado correctamente.');
     }
+
+    /**
+     * ✏️ Formulario para editar nómina
+     */
     public function edit($id)
-{
-    $nominaModel = new NominaModel();
-    $data['nomina'] = $nominaModel->find($id);
+    {
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado.');
+            return redirect()->to(base_url('menu'));
+        }
 
-    echo view('layouts/header');
-    echo view('nomina/edit', $data);
-    echo view('layouts/footer');
-}
+        $nomina = $this->nominaModel->find($id);
+        if (!$nomina) {
+            return redirect()->to(base_url('nomina'))->with('msg', 'Registro no encontrado.');
+        }
 
-public function update($id)
-{
-    $nominaModel = new NominaModel();
+        $data['nomina']    = (array) $nomina; // Convertir objeto a array
+        $data['empleados'] = $this->empleadoModel->findAll();
+        $data['titulo']    = 'Editar Nómina';
 
-    $data = [
-        'sueldo_base' => $this->request->getPost('sueldo_base'),
-        'bonificacion' => $this->request->getPost('bonificacion'),
-        'IGSS' => $this->request->getPost('IGSS'),
-        'otros_desc' => $this->request->getPost('otros_desc'),
-        'liquido' => $this->request->getPost('liquido'),
-    ];
+        echo view('layouts/header', $data);
+        echo view('nomina/edit', $data);
+        echo view('layouts/footer');
+    }
 
-    $nominaModel->update($id, $data);
-    return redirect()->to(base_url('nomina'))->with('msg', 'Registro actualizado con éxito.');
-}
+    /**
+     * 🔁 Actualizar nómina
+     */
+    public function update($id)
+    {
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado.');
+            return redirect()->to(base_url('menu'));
+        }
 
-public function delete($id)
-{
-    $nominaModel = new NominaModel();
-    $nominaModel->delete($id);
-    return redirect()->to(base_url('nomina'))->with('msg', 'Registro eliminado con éxito.');
-}
+        $sueldo_base  = (float) $this->request->getPost('sueldo_base');
+        $bonificacion = (float) $this->request->getPost('bonificacion') ?? 0;
+        $IGSS         = (float) $this->request->getPost('IGSS') ?? 0;
+        $otros_desc   = (float) $this->request->getPost('otros_desc') ?? 0;
+        $liquido      = $sueldo_base + $bonificacion - $IGSS - $otros_desc;
+
+        $this->nominaModel->update($id, [
+            'sueldo_base'     => $sueldo_base,
+            'bonificacion'    => $bonificacion,
+            'IGSS'            => $IGSS,
+            'otros_desc'      => $otros_desc,
+            'liquido'         => $liquido
+        ]);
+
+        return redirect()->to(base_url('nomina'))->with('msg', 'Registro actualizado correctamente.');
+    }
+
+    /**
+     * ❌ Eliminar nómina
+     */
+    public function delete($id)
+    {
+        if ($this->session->get('rol') !== 'admin') {
+            $this->session->setFlashdata('msg', 'Acceso denegado.');
+            return redirect()->to(base_url('menu'));
+        }
+
+        $this->nominaModel->delete($id);
+        return redirect()->to(base_url('nomina'))->with('msg', 'Registro eliminado con éxito.');
+    }
 }
