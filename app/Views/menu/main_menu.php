@@ -15,7 +15,9 @@
         <a href="<?= base_url('informegastos') ?>" class="btn btn-warning btn-lg">Informe de Gastos</a>
         <a href="<?= base_url('bonificaciones') ?>" class="btn btn-info btn-lg">Bonificaciones</a>
         <a href="<?= base_url('nomina') ?>" class="btn btn-secondary btn-lg">Nómina</a>
+        <a href="<?= base_url('creditos') ?>" class="btn btn-primary btn-lg">Créditos</a>
         <a href="<?= base_url('auth/logout') ?>" class="btn btn-danger btn-lg">Salir</a>
+
     </div>
 </div>
 
