@@ -17,6 +17,9 @@ $routes->post('auth/login', 'AuthController::login'); // Procesa el login
 $routes->post('auth/register', 'AuthController::register'); // Procesa el registro
 $routes->get('logout', 'AuthController::logout'); // Para cerrar sesión
 
+
+$routes->get('creditos', 'Creditos::index');
+
 // RUTA DEL MENÚ (Agregada/Modificada)
 // Si la URL es /menu, usa el método index() del MenuController
 $routes->get('menu', 'MenuController::index');
@@ -92,5 +95,3 @@ $routes->get('informegasto/delete/(:any)', 'InformeGasto::delete/$1');
     $routes->get('bonificacion/delete/(:segment)', 'Bonificacion::delete/$1');
 
     $routes->setAutoRoute(true);
-
-$routes->get('creditos', 'Creditos::index');
