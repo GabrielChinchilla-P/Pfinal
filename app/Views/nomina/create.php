@@ -1,91 +1,107 @@
 <?= $this->include('layouts/header'); ?>
+<div class="container mt-4">
+    <h3><i class="fa-solid fa-user-plus"></i> Registrar Nómina</h3>
+    <form action="<?= base_url('nomina/store') ?>" method="post" class="mt-3">
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3 bg-primary text-white">
-        <h1 class="h4 mb-0"><i class="fa-solid fa-calculator"></i> <?= esc($title); ?></h1>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <label>Empleado</label>
+        <select name="nombre_empleado" class="form-select" required>
+            <option value="">Seleccione un empleado</option>
+            <?php foreach ($empleados as $e): ?>
+                <option 
+                    value="<?= esc($e['nombre'] . ' ' . $e['apellido']) ?>"
+                    data-cod="<?= esc($e['cod_empleado']) ?>"
+                    data-dep="<?= esc($e['departamento']) ?>"
+                    data-sueldo="0"> <!-- Si tu tabla no tiene sueldo_base -->
+                    <?= esc($e['nombre'] . ' ' . $e['apellido']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
-    <div class="card-body">
-
-        <!-- Manejo de Errores de Validación -->
-        <?php if (isset($validation) && $validation->getErrors()): ?>
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">¡Error de Validación!</h4>
-                <ul>
-                    <?php foreach ($validation->getErrors() as $error): ?>
-                        <li><?= esc($error); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-
-        <!-- Formulario de Cálculo de Nómina -->
-        <form action="<?= base_url('nomina/store'); ?>" method="post">
-            <?= csrf_field(); ?>
-
-            <div class="row">
-                <!-- Columna Izquierda: Empleado y Mes -->
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label for="id_empleado">Empleado (*)</label>
-                        <select name="id_empleado" id="id_empleado" class="form-control" required>
-                            <option value="">Seleccione un Empleado</option>
-                            <?php if (!empty($empleados)): ?>
-                                <?php foreach ($empleados as $empleado): ?>
-                                    <option value="<?= esc($empleado['id_usuario']); ?>"
-                                        <?= set_select('id_empleado', $empleado['id_usuario']); ?>>
-                                        <?= esc($empleado['nombre']); ?> 
-                                        <?= esc($empleado['apellido']); ?>
-                                        (<?= esc($empleado['usuario']); ?>)
-                                    </option>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <option value="">No hay empleados registrados</option>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="mes">Mes de Pago (*)</label>
-                        <input type="text" name="mes" id="mes" class="form-control"
-                            placeholder="Ej: Octubre 2025" required
-                            value="<?= set_value('mes', date('F Y')); ?>">
-                    </div>
-                </div>
-
-                <!-- Columna Derecha: Valores Monetarios -->
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label for="sueldo_base">Sueldo Base (*)</label>
-                        <input type="number" step="0.01" name="sueldo_base" id="sueldo_base" class="form-control"
-                            required value="<?= set_value('sueldo_base'); ?>">
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="bonificacion">Bonificación (opcional)</label>
-                        <input type="number" step="0.01" name="bonificacion" id="bonificacion" class="form-control"
-                            value="<?= set_value('bonificacion', 0); ?>">
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="descuentos">Otros Descuentos (opcional)</label>
-                        <input type="number" step="0.01" name="descuentos" id="descuentos" class="form-control"
-                            value="<?= set_value('descuentos', 0); ?>">
-                    </div>
-
-                    <p class="text-info mt-4">
-                        <i class="fa-solid fa-circle-info"></i> El IGSS se calcula automáticamente (4.83% sobre Sueldo Base).
-                    </p>
-                </div>
-            </div>
-
-            <hr>
-
-            <button type="submit" class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk"></i> Registrar y Calcular Nómina
-            </button>
-            <a href="<?= base_url('nomina'); ?>" class="btn btn-secondary">Cancelar</a>
-
-        </form>
+    <div class="col-md-6">
+        <label>Código empleado</label>
+        <input type="text" name="cod_empleado" id="cod_empleado" class="form-control" readonly>
     </div>
 </div>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <label>Departamento</label>
+        <input type="text" name="departamento" id="departamento" class="form-control" readonly>
+    </div>
+</div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label>Sueldo Base (Q)</label>
+                <input type="number" step="0.01" name="sueldo_base" id="sueldo_base" class="form-control" readonly>
+            </div>
+            <div class="col-md-4">
+                <label>Bonificación (Q)</label>
+                <input type="number" step="0.01" name="bonificacion" id="bonificacion" class="form-control" value="250.00">
+            </div>
+            <div class="col-md-4">
+                <label>Otros Descuentos (Q)</label>
+                <input type="number" step="0.01" name="otros_desc" id="otros_desc" class="form-control" value="0.00">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label>IGSS (4.83%)</label>
+                <input type="number" step="0.01" name="IGSS" id="IGSS" class="form-control" readonly>
+            </div>
+            <div class="col-md-4">
+                <label>Total Líquido (Q)</label>
+                <input type="number" step="0.01" name="liquido" id="liquido" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-save"></i> Guardar Registro
+            </button>
+            <a href="<?= base_url('nomina') ?>" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const empleadoSelect = document.querySelector('select[name="nombre_empleado"]');
+    const codEmpleado = document.getElementById('cod_empleado');
+    const departamento = document.getElementById('departamento');
+    const sueldoBase = document.getElementById('sueldo_base');
+    const bonificacion = document.getElementById('bonificacion');
+    const otrosDesc = document.getElementById('otros_desc');
+    const igss = document.getElementById('IGSS');
+    const liquido = document.getElementById('liquido');
+
+    // Cargar datos del empleado
+    empleadoSelect.addEventListener('change', () => {
+        const selected = empleadoSelect.options[empleadoSelect.selectedIndex];
+        codEmpleado.value = selected.dataset.cod || '';
+        departamento.value = selected.dataset.dep || '';
+        sueldoBase.value = selected.dataset.sueldo || 0;
+        calcularTotales();
+    });
+
+    // Recalcular totales
+    [bonificacion, otrosDesc].forEach(input => {
+        input.addEventListener('input', calcularTotales);
+    });
+
+    function calcularTotales() {
+        const sueldo = parseFloat(sueldoBase.value) || 0;
+        const bono = parseFloat(bonificacion.value) || 0;
+        const otros = parseFloat(otrosDesc.value) || 0;
+
+        const igssCalc = sueldo * 0.0483;
+        const liquidoCalc = sueldo + bono - igssCalc - otros;
+
+        igss.value = igssCalc.toFixed(2);
+        liquido.value = liquidoCalc.toFixed(2);
+    }
+});
+</script>
