@@ -63,20 +63,6 @@
                 <tr><td colspan="9" class="text-center">No hay registros de nómina</td></tr>
             <?php endif; ?>
         </tbody>
-                        <tbody class="text-center">
-                    <tr>
-                        <td>199919849</td>
-                        <td>Gabriel Eduardo Chinchilla Pérez</td>
-                        <td class="text-start">
-                            <ul class="mb-0">
-                                <li>Desarrollo del CRUD de Nómina (buscar, guardar, editar, eliminar)</li>
-                                <li>Diseño e integración con Bootstrap 5 y DataTables</li>
-                                <li>Implementación de modales y alertas dinámicas</li>
-                                <li>Creación de Login para ingreso de usuarios y registro de nuevos usuarios</li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
     </table>
 </div>
 
