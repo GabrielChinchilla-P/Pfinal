@@ -14,7 +14,7 @@ class InformeGasto extends BaseController
     protected $empleadoModel;
     protected $departamentoModel;
 
-    public function __construct()
+    public function __construct()   
     {
         $this->informeModel = new InformeGastoModel();
         $this->empleadoModel = new EmpleadoModel();
