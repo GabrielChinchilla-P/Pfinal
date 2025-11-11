@@ -1,85 +1,104 @@
 <?php namespace App\Controllers;
 
-use App\Models\DepartamentosModel;
-use CodeIgniter\Controller;
+use App\Models\DepartamentoModel;
 
-class Departamentos extends Controller
+class Departamento extends BaseController
 {
-    protected $departamentosModel;
+    protected $departamentoModel;
 
     public function __construct()
-        {
-        $this->empleadosModel = new EmpleadosModel();
+    {
+        $this->departamentoModel = new DepartamentoModel();
     }
 
-    // 📄 Listar
     public function index()
     {
-        $data['empleados'] = $this->empleadosModel->findAll();
-        echo view('templates/header');
-        echo view('empleados/index', $data);
-        echo view('templates/footer');
+        $data['titulo'] = 'Departamentos';
+        $data['departamentos'] = $this->departamentoModel->findAll();
+
+        echo view('layouts/header', $data);
+        echo view('departamento/index', $data);
+        echo view('layouts/footer');
     }
 
-    // 🔍 Buscar
-    public function buscar()
+    public function create()
     {
-        $busqueda = $this->request->getGet('q');
-        if ($busqueda) {
-            $data['empleados'] = $this->empleadosModel
-                ->like('cod_empleado', $busqueda)
-                ->orLike('nombre', $busqueda)
-                ->orLike('apellido', $busqueda)
-                ->orLike('departamento', $busqueda)
-                ->findAll();
-        } else {
-            $data['empleados'] = $this->empleadosModel->findAll();
-        }
-
-        echo view('templates/header');
-        echo view('empleados/index', $data);
-        echo view('templates/footer');
+        $data['titulo'] = 'Registrar Departamento';
+        echo view('layouts/header', $data);
+        echo view('departamento/create', $data);
+        echo view('layouts/footer');
     }
 
-    // 🟢 Guardar
     public function store()
     {
-        $data = $this->request->getPost([
-            'cod_empleado', 'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        $distancia = floatval($this->request->getPost('distancia'));
+        $alojamiento = floatval($this->request->getPost('alojamiento'));
+        $alimentacion = floatval($this->request->getPost('alimentacion'));
+        $combustible = (($distancia / 35) * 30.54) * 2;
+
+        $this->departamentoModel->save([
+            'depto' => $this->request->getPost('depto'),
+            'descripcion' => $this->request->getPost('descripcion'),
+            'distancia' => $distancia,
+            'alojamiento' => $alojamiento,
+            'alimentacion' => $alimentacion,
+            'combustible' => $combustible
         ]);
 
-        $this->empleadosModel->insert($data);
-
-        if ($this->empleadosModel->db->affectedRows() > 0) {
-            return redirect()->to('/empleados')->with('success', 'Empleado agregado correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'No se realizaron cambios (verifique el código del empleado).');
-        }
+        return redirect()->to(base_url('departamento'))->with('msg', 'Departamento registrado correctamente.');
     }
 
- // ✏️ Editar
+    public function edit($id)
+    {
+        $data['titulo'] = 'Editar Departamento';
+        $data['departamento'] = $this->departamentoModel->find($id);
+
+        echo view('layouts/header', $data);
+        echo view('departamento/edit', $data);
+        echo view('layouts/footer');
+    }
+
     public function update($id)
     {
-        $data = $this->request->getPost([
-            'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        $distancia = floatval($this->request->getPost('distancia'));
+        $alojamiento = floatval($this->request->getPost('alojamiento'));
+        $alimentacion = floatval($this->request->getPost('alimentacion'));
+        $combustible = (($distancia / 35) * 30.54) * 2;
+
+        $this->departamentoModel->update($id, [
+            'descripcion' => $this->request->getPost('descripcion'),
+            'distancia' => $distancia,
+            'alojamiento' => $alojamiento,
+            'alimentacion' => $alimentacion,
+            'combustible' => $combustible
         ]);
 
-        if ($this->empleadosModel->update($id, $data)) {
-            return redirect()->to('/empleados')->with('success', 'Empleado actualizado correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al actualizar el empleado.');
-        }
+        return redirect()->to(base_url('departamento'))->with('msg', 'Departamento actualizado correctamente.');
     }
 
-      // ❌ Eliminar
     public function delete($id)
     {
-        if ($this->empleadosModel->delete($id)) {
-            return redirect()->to('/empleados')->with('success', 'Empleado eliminado correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al eliminar el empleado.');
-        }
+        $this->departamentoModel->delete($id);
+        return redirect()->to(base_url('departamento'))->with('msg', 'Departamento eliminado correctamente.');
+    }
+
+public function ajaxCosto($id)
+{
+    $departamento = $this->departamentoModel->find($id);
+
+    if ($departamento) {
+        return $this->response->setJSON([
+            'alimentacion' => floatval($departamento['alimentacion']),
+            'alojamiento' => floatval($departamento['alojamiento']),
+            'combustible' => floatval($departamento['combustible']),
+        ]);
+    } else {
+        return $this->response->setJSON([
+            'alimentacion' => 0,
+            'alojamiento' => 0,
+            'combustible' => 0,
+            'mensaje' => 'No se encontraron costos fijos para este departamento'
+        ]);
     }
 }
-
-   
+}
