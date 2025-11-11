@@ -34,6 +34,37 @@ class InformeGasto extends BaseController
         echo view('layouts/footer');
     }
 
+    /** 🔍 Buscar informes de gastos */
+    public function buscar()
+    {
+        $searchQuery = $this->request->getGet('q');
+        $fechaInicio = $this->request->getGet('fecha_inicio');
+        $fechaFin    = $this->request->getGet('fecha_fin');
+
+        // Buscar según texto (nombre, apellido, depto, fecha)
+        if (!empty($searchQuery)) {
+            $informes = $this->informeModel->buscarInformes($searchQuery);
+        } else {
+            $informes = $this->informeModel->getInformeConEmpleadoYDepartamento();
+        }
+
+        // Filtrar por fecha si se proporcionan
+        if (!empty($fechaInicio) && !empty($fechaFin)) {
+            $informes = array_filter($informes, function($item) use ($fechaInicio, $fechaFin) {
+                return ($item['fecha_visita'] >= $fechaInicio && $item['fecha_visita'] <= $fechaFin);
+            });
+        }
+
+        $data = [
+            'informes' => $informes,
+            'title'    => 'Resultados de Búsqueda'
+        ];
+
+        echo view('layouts/header', $data);
+        echo view('infgastos/index', $data);
+        echo view('layouts/footer');
+    }
+
     /** Mostrar formulario para crear informe */
     public function create()
     {
@@ -123,7 +154,6 @@ class InformeGasto extends BaseController
         $cod_depto = $this->request->getPost('cod_depto');
         $otros = (float) $this->request->getPost('otros');
 
-        // Obtener costos fijos del departamento
         $dept_costos = $this->departamentoModel->obtenerCostosFijos($cod_depto);
         if (!$dept_costos) {
             return redirect()->back()->withInput()->with('error', 'No se encontraron costos fijos para ese departamento.');
