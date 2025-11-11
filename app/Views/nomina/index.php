@@ -1,4 +1,4 @@
-<?= $this->include('layouts/header'); ?>
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3><i class="fa-solid fa-file-invoice-dollar"></i> Nómina</h3>
@@ -66,4 +66,3 @@
     </table>
 </div>
 
-<?= $this->include('layouts/footer'); ?>
