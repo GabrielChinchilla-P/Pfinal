@@ -97,4 +97,3 @@ class Bonificacion extends BaseController
         return redirect()->to(base_url('bonificacion'))->with('msg', 'Bonificación eliminada correctamente.');
     }
 }
-
