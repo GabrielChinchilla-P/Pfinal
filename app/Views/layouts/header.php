@@ -59,6 +59,7 @@
           <li class="nav-item"><a class="nav-link" href="<?= base_url('informegasto') ?>"><i class="fa-solid fa-file-invoice-dollar"></i> Informe de Gastos</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= base_url('bonificacion') ?>"><i class="fa-solid fa-gift"></i> Bonificaciones</a></li>
           <li class="nav-item"><a class="nav-link" href="<?= base_url('nomina') ?>"><i class="fa-solid fa-money-bill-wave"></i> Nómina</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= base_url('creditos') ?>"><i class="fa-solid fa-users"></i>Créditos</a></li>
           <li class="nav-item"><a class="nav-link text-warning" href="<?= base_url('logout') ?>"><i class="fa-solid fa-right-from-bracket"></i> Salir</a></li>
         </ul>
       </div>
