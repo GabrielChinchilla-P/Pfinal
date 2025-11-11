@@ -1,105 +1,100 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use App\Models\BonificacionModel;
-use CodeIgniter\Controller;
+use App\Models\EmpleadoModel;
 
-
-class Bonificacion extends Controller
+class Bonificacion extends BaseController
 {
     protected $bonificacionModel;
+    protected $empleadoModel;
 
     public function __construct()
     {
         $this->bonificacionModel = new BonificacionModel();
+        $this->empleadoModel = new EmpleadoModel();
     }
 
- // Listar registros
     public function index()
     {
-        $data['bonificacion'] = $this->bonificacionModel->findAll();
-        echo view('templates/header');
+        $data['titulo'] = 'Registro de Bonificaciones';
+        $data['bonificaciones'] = $this->bonificacionModel->findAll();
+
+        echo view('layouts/header', $data);
         echo view('bonificacion/index', $data);
-        echo view('templates/footer');
+        echo view('layouts/footer');
     }
 
-    // Buscar
-    public function buscar()
+    public function create()
     {
-        $busqueda = $this->request->getGet('q');
-        if ($busqueda) {
-            $data['bonificacion'] = $this->bonificacionModel
-                ->like('id_visitador', $busqueda)
-                ->orLike('nombre_visitador', $busqueda)
-                ->findAll();
-        } else {
-            $data['bonificacion'] = $this->bonificacionModel->findAll();
-        }
+        $data['titulo'] = 'Nueva Bonificación';
+        $data['empleados'] = $this->empleadoModel->findAll();
 
-        echo view('templates/header');
-        echo view('bonificacion/index', $data);
-        echo view('templates/footer');
+        echo view('layouts/header', $data);
+        echo view('bonificacion/create', $data);
+        echo view('layouts/footer');
     }
 
-     // Guardar nuevo
     public function store()
     {
-        $data = $this->request->getPost([
-            'id_visitador', 'nombre_visitador', 'ventas_totales'
+        $ventas = floatval($this->request->getPost('ventas_totales'));
+
+        if ($ventas > 40000) {
+            $bonificacion = $ventas * 0.15;
+        } elseif ($ventas > 25000) {
+            $bonificacion = $ventas * 0.10;
+        } else {
+            $bonificacion = $ventas * 0.05;
+        }
+
+        $this->bonificacionModel->save([
+            'id_visitador' => $this->request->getPost('cod_empleado'),
+            'nombre_visitador' => $this->request->getPost('nombre_empleado'),
+            'ventas_totales' => $ventas,
+            'bonificacion' => $bonificacion
         ]);
 
-        $ventas = (float)$data['ventas_totales'];
-
-        // Calcular bonificación automáticamente
-        if ($ventas >= 40000) {
-            $data['bonificacion'] = $ventas * 0.15;
-        } elseif ($ventas >= 25000) {
-            $data['bonificacion'] = $ventas * 0.10;
-        } else {
-            $data['bonificacion'] = $ventas * 0.05;
-        }
-
-        $this->bonificacionModel->insert($data);
-
-        if ($this->bonificacionModel->db->affectedRows() > 0) {
-            return redirect()->to('/bonificacion')->with('success', 'Bonificación registrada correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al guardar la bonificación.');
-        }
+        return redirect()->to(base_url('bonificacion'))->with('msg', 'Bonificación registrada correctamente.');
     }
 
-    // Editar registro
+    public function edit($id)
+    {
+        $data['titulo'] = 'Editar Bonificación';
+        $data['bonificacion'] = $this->bonificacionModel->find($id);
+        $data['empleados'] = $this->empleadoModel->findAll();
+
+        echo view('layouts/header', $data);
+        echo view('bonificacion/edit', $data);
+        echo view('layouts/footer');
+    }
+
     public function update($id)
     {
-        $data = $this->request->getPost([
-            'nombre_visitador', 'ventas_totales'
+        $ventas = floatval($this->request->getPost('ventas_totales'));
+
+        if ($ventas > 40000) {
+            $bonificacion = $ventas * 0.15;
+        } elseif ($ventas > 25000) {
+            $bonificacion = $ventas * 0.10;
+        } else {
+            $bonificacion = $ventas * 0.05;
+        }
+
+        $this->bonificacionModel->update($id, [
+            'id_visitador' => $this->request->getPost('cod_empleado'),
+            'nombre_visitador' => $this->request->getPost('nombre_empleado'),
+            'ventas_totales' => $ventas,
+            'bonificacion' => $bonificacion
         ]);
 
-        $ventas = (float)$data['ventas_totales'];
-
-        if ($ventas >= 40000) {
-            $data['bonificacion'] = $ventas * 0.15;
-        } elseif ($ventas >= 25000) {
-            $data['bonificacion'] = $ventas * 0.10;
-        } else {
-            $data['bonificacion'] = $ventas * 0.05;
-        }
-
-        $this->bonificacionModel->update($id, $data);
-
-        if ($this->bonificacionModel->db->affectedRows() > 0) {
-            return redirect()->to('/bonificacion')->with('success', 'Bonificación actualizada correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'No se realizaron cambios.');
-        }
+        return redirect()->to(base_url('bonificacion'))->with('msg', 'Bonificación actualizada correctamente.');
     }
 
- // Eliminar
     public function delete($id)
     {
-        if ($this->bonificacionModel->delete($id)) {
-            return redirect()->to('/bonificacion')->with('success', 'Bonificación eliminada correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al eliminar la bonificación.');
-        }
+        $this->bonificacionModel->delete($id);
+        return redirect()->to(base_url('bonificacion'))->with('msg', 'Bonificación eliminada correctamente.');
     }
 }
+
