@@ -1,5 +1,4 @@
-<?php 
-// APPPATH/Controllers/InformeGasto.php
+<?php
 
 namespace App\Controllers;
 
@@ -14,7 +13,7 @@ class InformeGasto extends BaseController
     protected $empleadoModel;
     protected $departamentoModel;
 
-    public function __construct()   
+    public function __construct()
     {
         $this->informeModel = new InformeGastoModel();
         $this->empleadoModel = new EmpleadoModel();
@@ -37,39 +36,18 @@ class InformeGasto extends BaseController
     /** 🔍 Buscar informes de gastos */
     public function buscar()
     {
-        $searchQuery = $this->request->getGet('q');
-        $fechaInicio = $this->request->getGet('fecha_inicio');
-        $fechaFin    = $this->request->getGet('fecha_fin');
+        $q = $this->request->getGet('q');
+        $fecha_inicio = $this->request->getGet('fecha_inicio');
+        $fecha_fin = $this->request->getGet('fecha_fin');
 
-        // 1️⃣ Obtener datos base
-        if (!empty($searchQuery)) {
-            $informes = $this->informeModel->buscarInformes($searchQuery);
-        } else {
-            $informes = $this->informeModel->getInformeConEmpleadoYDepartamento();
-        }
-
-        // 2️⃣ Filtrar por rango de fechas
-        if (!empty($fechaInicio) && !empty($fechaFin)) {
-            $fechaInicio = date('Y-m-d', strtotime($fechaInicio));
-            $fechaFin = date('Y-m-d', strtotime($fechaFin));
-
-            $informes = array_filter($informes, function($item) use ($fechaInicio, $fechaFin) {
-                // Normalizar formato de la fecha del registro
-                $fecha = date('Y-m-d', strtotime($item['fecha_visita']));
-                return ($fecha >= $fechaInicio && $fecha <= $fechaFin);
-            });
-        } elseif (!empty($fechaInicio)) {
-            // Si solo se especifica una fecha
-            $fechaInicio = date('Y-m-d', strtotime($fechaInicio));
-
-            $informes = array_filter($informes, function($item) use ($fechaInicio) {
-                return date('Y-m-d', strtotime($item['fecha_visita'])) === $fechaInicio;
-            });
-        }
+        $informes = $this->informeModel->buscarInformes($q, $fecha_inicio, $fecha_fin);
 
         $data = [
             'informes' => $informes,
-            'title'    => 'Resultados de Búsqueda'
+            'searchQuery' => $q,
+            'fecha_inicio' => $fecha_inicio,
+            'fecha_fin' => $fecha_fin,
+            'title' => 'Resultados de búsqueda'
         ];
 
         echo view('layouts/header', $data);
@@ -103,9 +81,9 @@ class InformeGasto extends BaseController
             return redirect()->back()->withInput()->with('error', 'No se encontraron costos fijos para ese departamento.');
         }
 
-        $total = (float)$dept_costos['alojamiento'] 
-               + (float)$dept_costos['combustible'] 
-               + (float)$dept_costos['alimentacion'] 
+        $total = (float)$dept_costos['alojamiento']
+               + (float)$dept_costos['combustible']
+               + (float)$dept_costos['alimentacion']
                + $otros;
 
         $data = [
@@ -171,9 +149,9 @@ class InformeGasto extends BaseController
             return redirect()->back()->withInput()->with('error', 'No se encontraron costos fijos para ese departamento.');
         }
 
-        $total = (float)$dept_costos['alojamiento'] 
-               + (float)$dept_costos['combustible'] 
-               + (float)$dept_costos['alimentacion'] 
+        $total = (float)$dept_costos['alojamiento']
+               + (float)$dept_costos['combustible']
+               + (float)$dept_costos['alimentacion']
                + $otros;
 
         $data = [
