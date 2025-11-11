@@ -1,5 +1,4 @@
-<?php 
-// APPPATH/Models/InformeGastoModel.php
+<?php
 
 namespace App\Models;
 
@@ -7,118 +6,70 @@ use CodeIgniter\Model;
 
 class InformeGastoModel extends Model
 {
-    protected $table            = 'informe_gastos';
-    protected $primaryKey       = 'id_informe';
-    protected $returnType       = 'array';
-    protected $useAutoIncrement = false; 
-    protected $useSoftDeletes   = false;
-
-    // Campos que existen en la tabla informe_gastos
+    protected $table = 'informes';
+    protected $primaryKey = 'id';
     protected $allowedFields = [
-        'id_informe',
-        'cod_empleado', 
-        'cod_depto',    
-        'nombre',
-        'apellido',
-        'departamento',
-        'fecha_inicio',
-        'fecha_fin',
-        'fecha_visita',
-        'descripcion',
-        'otros',        // Gasto variable reportado
-        'total'         // Total calculado
+        'id_informe', 'cod_empleado', 'nombre', 'apellido',
+        'departamento', 'fecha_inicio', 'fecha_fin', 'fecha_visita',
+        'cod_depto', 'descripcion', 'otros', 'total',
+        'alimentacion', 'alojamiento', 'combustible'
     ];
 
-    protected $useTimestamps = false;
-    protected $validationRules = [];
-    protected $validationMessages = [];
-    protected $skipValidation = false;
-
-    /**
-     * 🔹 Obtiene todos los informes con datos relacionados del empleado y el departamento.
-     * Se usa en el método index() del controlador.
-     */
+    /** Obtener todos los informes con datos relacionados */
     public function getInformeConEmpleadoYDepartamento()
     {
-        return $this->select('
-                    informe_gastos.*,
-                    e.nombre AS nombre_empleado,
-                    e.apellido AS apellido_empleado,
-                    d.descripcion AS nombre_departamento
-                ')
-                ->join('empleados e', 'e.cod_empleado = informe_gastos.cod_empleado', 'left')
-                ->join('departamentos d', 'd.depto = informe_gastos.cod_depto', 'left')
-                ->orderBy('informe_gastos.fecha_visita', 'DESC')
-                ->findAll();
+        return $this->select('informes.*, empleados.nombre AS nombre_empleado, empleados.apellido, departamentos.descripcion AS departamento')
+                    ->join('empleados', 'empleados.cod_empleado = informes.cod_empleado', 'left')
+                    ->join('departamentos', 'departamentos.cod_depto = informes.cod_depto', 'left')
+                    ->findAll();
     }
 
-    /**
-     * 🔍 Buscar informes por nombre, apellido, departamento o fecha de visita.
-     * Se usa en el método buscar() del controlador.
-     */
-    public function buscarInformes($searchQuery)
+    /** Buscar informes por nombre o rango de fechas */
+    public function buscarInformes($q = null, $fecha_inicio = null, $fecha_fin = null)
     {
-        return $this->select('
-                    informe_gastos.*,
-                    e.nombre AS nombre_empleado,
-                    e.apellido AS apellido_empleado,
-                    d.descripcion AS nombre_departamento
-                ')
-                ->join('empleados e', 'e.cod_empleado = informe_gastos.cod_empleado', 'left')
-                ->join('departamentos d', 'd.depto = informe_gastos.cod_depto', 'left')
-                ->groupStart()
-                    ->like('LOWER(e.nombre)', strtolower($searchQuery))
-                    ->orLike('LOWER(e.apellido)', strtolower($searchQuery))
-                    ->orLike('LOWER(d.descripcion)', strtolower($searchQuery))
-                    ->orLike('informe_gastos.fecha_visita', $searchQuery)
-                ->groupEnd()
-                ->orderBy('informe_gastos.fecha_visita', 'DESC')
-                ->findAll();
+        $builder = $this->select('informes.*, empleados.nombre AS nombre_empleado, empleados.apellido, departamentos.descripcion AS departamento')
+                        ->join('empleados', 'empleados.cod_empleado = informes.cod_empleado', 'left')
+                        ->join('departamentos', 'departamentos.cod_depto = informes.cod_depto', 'left');
+
+        if (!empty($q)) {
+            $builder->groupStart()
+                    ->like('empleados.nombre', $q)
+                    ->orLike('empleados.apellido', $q)
+                    ->orLike('departamentos.descripcion', $q)
+                    ->groupEnd();
+        }
+
+        if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+            $builder->where('informes.fecha_visita >=', $fecha_inicio)
+                    ->where('informes.fecha_visita <=', $fecha_fin);
+        } elseif (!empty($fecha_inicio)) {
+            $builder->where('informes.fecha_visita', $fecha_inicio);
+        }
+
+        return $builder->findAll();
     }
 
-    /**
-     * ➕ Crear un nuevo informe de gastos.
-     * Genera un ID único si no se proporciona.
-     */
+    /** Crear informe */
     public function crearInforme($data)
     {
-        if (!isset($data['id_informe']) || empty($data['id_informe'])) {
-            $data['id_informe'] = 'INF' . uniqid();
-        }
-
-        // Si el controlador no calculó el total, se usa 'otros'
-        if (!isset($data['total'])) {
-            $data['total'] = ($data['otros'] ?? 0); 
-        }
-
-        return $this->insert($data); 
+        return $this->insert($data);
     }
 
-    /**
-     * ✏️ Actualizar un informe de gastos existente.
-     */
-    public function actualizarInforme($id_informe, $data)
+    /** Obtener informe por ID */
+    public function getInformePorID($id)
     {
-        if (!isset($data['total']) && isset($data['otros'])) {
-            $data['total'] = $data['otros']; 
-        }
-
-        return $this->update($id_informe, $data);
+        return $this->find($id);
     }
 
-    /**
-     * 🗑️ Eliminar un informe de gastos.
-     */
-    public function eliminarInforme($id_informe)
+    /** Actualizar informe */
+    public function actualizarInforme($id, $data)
     {
-        return $this->delete($id_informe);
+        return $this->update($id, $data);
     }
 
-    /**
-     * 🔎 Obtener un informe por su ID.
-     */
-    public function getInformePorID($id_informe)
+    /** Eliminar informe */
+    public function eliminarInforme($id)
     {
-        return $this->where('id_informe', $id_informe)->first();
+        return $this->delete($id);
     }
 }
