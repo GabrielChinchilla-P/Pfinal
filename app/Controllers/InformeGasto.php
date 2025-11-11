@@ -21,7 +21,7 @@ class InformeGasto extends BaseController
         $this->departamentoModel = new DepartamentoModel();
     }
 
-    /** Listar todos los informes */
+    /** 📋 Listar todos los informes */
     public function index()
     {
         $data = [
@@ -41,17 +41,29 @@ class InformeGasto extends BaseController
         $fechaInicio = $this->request->getGet('fecha_inicio');
         $fechaFin    = $this->request->getGet('fecha_fin');
 
-        // Buscar según texto (nombre, apellido, depto, fecha)
+        // 1️⃣ Obtener datos base
         if (!empty($searchQuery)) {
             $informes = $this->informeModel->buscarInformes($searchQuery);
         } else {
             $informes = $this->informeModel->getInformeConEmpleadoYDepartamento();
         }
 
-        // Filtrar por fecha si se proporcionan
+        // 2️⃣ Filtrar por rango de fechas
         if (!empty($fechaInicio) && !empty($fechaFin)) {
+            $fechaInicio = date('Y-m-d', strtotime($fechaInicio));
+            $fechaFin = date('Y-m-d', strtotime($fechaFin));
+
             $informes = array_filter($informes, function($item) use ($fechaInicio, $fechaFin) {
-                return ($item['fecha_visita'] >= $fechaInicio && $item['fecha_visita'] <= $fechaFin);
+                // Normalizar formato de la fecha del registro
+                $fecha = date('Y-m-d', strtotime($item['fecha_visita']));
+                return ($fecha >= $fechaInicio && $fecha <= $fechaFin);
+            });
+        } elseif (!empty($fechaInicio)) {
+            // Si solo se especifica una fecha
+            $fechaInicio = date('Y-m-d', strtotime($fechaInicio));
+
+            $informes = array_filter($informes, function($item) use ($fechaInicio) {
+                return date('Y-m-d', strtotime($item['fecha_visita'])) === $fechaInicio;
             });
         }
 
@@ -65,7 +77,7 @@ class InformeGasto extends BaseController
         echo view('layouts/footer');
     }
 
-    /** Mostrar formulario para crear informe */
+    /** ➕ Mostrar formulario para crear informe */
     public function create()
     {
         $data = [
@@ -79,7 +91,7 @@ class InformeGasto extends BaseController
         echo view('layouts/footer');
     }
 
-    /** Guardar un nuevo informe */
+    /** 💾 Guardar un nuevo informe */
     public function store()
     {
         $cod_depto = $this->request->getPost('cod_depto');
@@ -123,7 +135,7 @@ class InformeGasto extends BaseController
         return redirect()->back()->withInput()->with('errors', $this->informeModel->errors() ?: ['Error desconocido al guardar el informe.']);
     }
 
-    /** Mostrar formulario para editar informe */
+    /** ✏️ Mostrar formulario para editar informe */
     public function edit($id)
     {
         $informe = $this->informeModel->getInformePorID($id);
@@ -143,7 +155,7 @@ class InformeGasto extends BaseController
         echo view('layouts/footer');
     }
 
-    /** Actualizar informe existente */
+    /** 🔄 Actualizar informe existente */
     public function update($id)
     {
         $informe = $this->informeModel->getInformePorID($id);
@@ -190,7 +202,7 @@ class InformeGasto extends BaseController
         return redirect()->back()->withInput()->with('errors', $this->informeModel->errors() ?: ['Error desconocido al actualizar el informe.']);
     }
 
-    /** Eliminar un informe */
+    /** 🗑️ Eliminar un informe */
     public function delete($id)
     {
         $informe = $this->informeModel->getInformePorID($id);
