@@ -64,11 +64,14 @@ $routes->group('/', ['filter' => 'auth'], static function ($routes) {
     // Rutas Informe de Gastos
     // ---------------------------------
 
-$routes->get('informe_gastos', 'InformeGastos::index');
-$routes->post('informe_gastos/buscar', 'InformeGastos::buscar');
-$routes->post('informe_gastos/store', 'InformeGastos::store');   
-$routes->post('informe_gastos/update/(:segment)', 'InformeGastos::update/$1');
-$routes->get('informe_gastos/delete/(:segment)', 'InformeGastos::delete/$1');   
+// Informe de gastos
+$routes->get('informegasto', 'InformeGasto::index');
+$routes->get('informegasto/create', 'InformeGasto::create');
+$routes->post('informegasto/store', 'InformeGasto::store');
+$routes->get('informegasto/edit/(:any)', 'InformeGasto::edit/$1');
+$routes->post('informegasto/update/(:any)', 'InformeGasto::update/$1');
+$routes->get('informegasto/delete/(:any)', 'InformeGasto::delete/$1');
+
  // ---------------------------------
 
     // MÓDULO DE DEPARTAMENTO (NUEVO)
