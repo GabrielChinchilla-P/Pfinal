@@ -1,4 +1,3 @@
-<?= $this->include('layouts/header'); ?>
 <div class="container mt-4">
     <h3><i class="fa-solid fa-user-plus"></i> Registrar Nómina</h3>
     <form action="<?= base_url('nomina/store') ?>" method="post" class="mt-3">
