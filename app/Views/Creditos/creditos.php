@@ -48,10 +48,10 @@
         </tbody>
     </table>
 
-    <div class="text-center mt-4">
-        <img src="<?= base_url('images/usac.png') ?>" alt="Logo USAC" width="150" class="mx-2">
-        <img src="<?= base_url('images/efpem.png') ?>" alt="Logo EFPEM" width="150" class="mx-2">
-    </div>
+<div class="text-center mt-4">
+    <img src="<?= base_url('images/usac.png') ?>" alt="Logo USAC" width="150">
+    <img src="<?= base_url('images/efpem.png') ?>" alt="Logo EFPEM" width="150">
+</div>
     <footer class="text-center mt-5">
         <p>© 2025 - Proyecto Final | Proyectos de Programación</p>
     </footer>
