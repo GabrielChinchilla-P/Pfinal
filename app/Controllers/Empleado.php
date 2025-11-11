@@ -1,82 +1,72 @@
 <?php namespace App\Controllers;
 
-use App\Models\EmpleadosModel;
-use CodeIgniter\Controller;
+use App\Models\EmpleadoModel;
 
-class Empleados extends Controller
+class Empleado extends BaseController
 {
-    protected $empleadosModel;
+    protected $empleadoModel;
 
     public function __construct()
     {
-        $this->empleadosModel = new EmpleadosModel();
+        $this->empleadoModel = new EmpleadoModel();
     }
 
-    // 📄 Listar
     public function index()
     {
-        $data['empleados'] = $this->empleadosModel->findAll();
-        echo view('templates/header');
-        echo view('empleados/index', $data);
-        echo view('templates/footer');
+        $data['titulo'] = 'Empleados';
+        $data['empleados'] = $this->empleadoModel->findAll();
+
+        echo view('layouts/header', $data);
+        echo view('empleado/index', $data);
+        echo view('layouts/footer');
     }
 
-    // 🔍 Buscar
-    public function buscar()
+    public function create()
     {
-        $busqueda = $this->request->getGet('q');
-        if ($busqueda) {
-            $data['empleados'] = $this->empleadosModel
-                ->like('cod_empleado', $busqueda)
-                ->orLike('nombre', $busqueda)
-                ->orLike('apellido', $busqueda)
-                ->orLike('departamento', $busqueda)
-                ->findAll();
-        } else {
-            $data['empleados'] = $this->empleadosModel->findAll();
-        }
-
-        echo view('templates/header');
-        echo view('empleados/index', $data);
-        echo view('templates/footer');
+        $data['titulo'] = 'Registrar Empleado';
+        echo view('layouts/header', $data);
+        echo view('empleado/create', $data);
+        echo view('layouts/footer');
     }
 
-    // 🟢 Guardar
     public function store()
-{
-    $data = $this->request->getPost([
-        'cod_empleado', 'nombre', 'apellido', 'departamento', 'fecha_ingreso'
-    ]);
-
-    $this->empleadosModel->insert($data);
-
-    if ($this->empleadosModel->db->affectedRows() > 0) {
-        return redirect()->to('/empleados')->with('success', 'Empleado agregado correctamente.');
-    } else {
-        return redirect()->back()->with('error', 'No se realizaron cambios (verifique el código del empleado).');
-    }
-}
-
-    // ✏️ Editar
-    public function update($id)
     {
-        $data = $this->request->getPost([
-            'nombre', 'apellido', 'departamento', 'fecha_ingreso'
+        $this->empleadoModel->save([
+            'cod_empleado' => $this->request->getPost('cod_empleado'),
+            'nombre' => $this->request->getPost('nombre'),
+            'apellido' => $this->request->getPost('apellido'),
+            'departamento' => $this->request->getPost('departamento'),
+            'fecha_ingreso' => $this->request->getPost('fecha_ingreso')
         ]);
 
-        if ($this->empleadosModel->update($id, $data)) {
-            return redirect()->to('/empleados')->with('success', 'Empleado actualizado correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al actualizar el empleado.');
-        }
+        return redirect()->to(base_url('empleado'))->with('msg', 'Empleado registrado correctamente.');
     }
- // ❌ Eliminar
+
+    public function edit($id)
+    {
+        $data['titulo'] = 'Editar Empleado';
+        $data['empleado'] = $this->empleadoModel->find($id);
+
+        echo view('layouts/header', $data);
+        echo view('empleado/edit', $data);
+        echo view('layouts/footer');
+    }
+
+    public function update($id)
+    {
+        $this->empleadoModel->update($id, [
+            'nombre' => $this->request->getPost('nombre'),
+            'apellido' => $this->request->getPost('apellido'),
+            'departamento' => $this->request->getPost('departamento'),
+            'fecha_ingreso' => $this->request->getPost('fecha_ingreso')
+        ]);
+
+        return redirect()->to(base_url('empleado'))->with('msg', 'Empleado actualizado correctamente.');
+    }
+
     public function delete($id)
     {
-        if ($this->empleadosModel->delete($id)) {
-            return redirect()->to('/empleados')->with('success', 'Empleado eliminado correctamente.');
-        } else {
-            return redirect()->back()->with('error', 'Error al eliminar el empleado.');
-        }
+        $this->empleadoModel->delete($id);
+        return redirect()->to(base_url('empleado'))->with('msg', 'Empleado eliminado correctamente.');
     }
 }
